@@ -271,6 +271,35 @@
       font-weight: 700;
     }
 
+    .neon-tagline {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      margin-top: -20px;
+      margin-bottom: 32px;
+      max-width: 440px;
+      color: rgba(0, 210, 197, 0.2);
+      animation: neonFlicker 5s infinite;
+      animation-delay: 1.2s;
+      animation-fill-mode: backwards;
+    }
+
+    @keyframes neonFlicker {
+      0%, 4%   { color: rgba(0, 210, 197, 0.18); }
+      6%       { color: #00d2c5; }
+      8%, 36%  { color: #00d2c5; }
+      37%      { color: rgba(0, 210, 197, 0.12); }
+      38%      { color: #00d2c5; }
+      39%      { color: rgba(0, 210, 197, 0.12); }
+      40%      { color: #00d2c5; }
+      41%      { color: rgba(0, 210, 197, 0.12); }
+      42%      { color: #00d2c5; }
+      43%      { color: rgba(0, 210, 197, 0.12); }
+      44%      { color: #00d2c5; }
+      46%, 100%{ color: rgba(0, 210, 197, 0.18); }
+    }
+
     .hero-actions {
       display: flex;
       gap: 20px;
@@ -1823,13 +1852,11 @@
   <section id="hero" data-screen-label="01 Hero">
     <div class="hero-content">
       <h1 class="hero-title fade-in fade-in-delay-1">
-        Tu marca<br />tiene<span class="pink"> potencial </span><br /><span class="brush-underline" id="brushSpan">vamos a explotarlo</span>
+        Comunicación<br />diseño <span class="pink"> y contenido</span><br /><span class="brush-underline" id="brushSpan">audiovisual</span>
       </h1>
-      <p class="hero-body fade-in fade-in-delay-2">
-        Trabajo con empresas que <strong>tienen mucho que decir pero en ocasiones no saben como comunicarlo.</strong><br />
-        Casi 20 años de experiencia en el mundo audiovisual, diseño corporativo y dirección de producto, me ayudan a moverme con soltura entre estrategia, creatividad y ejecución sin perderme en el humo corporativo, ese deporte olímpico tan nuestro.<br /><br />
-        Porque tener algo importante que decir está muy bien pero<strong> saber decirlo, aún está mejor.</strong>
-      </p>
+      <p class="neon-tagline fade-in fade-in-delay-2">Podría poner un título cañero pero prefiero volver a los clásicos.</p>
+      <p class="hero-body fade-in fade-in-delay-2">Me presento: me llamo Beatriz, soy freelance multiusos y <strong>trabajo con empresas que tienen mucho que decir pero en ocasiones no saben como comunicarlo.</strong> Los casi 20 años de experiencia en el mundo audiovisual, diseño corporativo y dirección de producto, me permiten moverme con soltura entre estrategia, creatividad y ejecución sin perderme en el humo corporativo, ese deporte olímpico tan nuestro.</p>
+      <p class="hero-body fade-in fade-in-delay-2">Porque tener algo importante que decir está muy bien pero <strong>saber decirlo, aún está mejor.</strong></p>
       <div class="hero-actions fade-in fade-in-delay-3">
         <a href="#letsdance" class="btn-primary">ME GUSTA, EMPECEMOS</a>
         <a href="#diferente" class="btn-ghost">Dime más</a>
@@ -1860,7 +1887,7 @@
         Diferente letra <span class="pink-underline">misma</span><br /><span class="pink-underline">melodía</span>
       </h2>
       <div class="section-body fade-in fade-in-delay-1">
-        <p>Llevo años viendo el mismo problema que solo cambia de sitio: <strong>la IA no viene a salvarte la vida, viene a pisar el acelerador de lo que ya tenías.</strong><p>
+        <p>Llevo años viendo el mismo problema que solo cambia de sitio: tecnologías que generan histeria y miedo a partes iguales. <strong>Hoy es la IA, pero déjame decirte que no viene ni robarte el trabajo ni a salvarte la vida, viene a pisar el acelerador de lo que ya tenías.</strong><p>
         <p>Y eso suena precioso hasta que recuerdas que también amplifica el caos, la indecisión y esas ideas que parecían brillantes a las 2:00 AM. Si eran buenas, las lleva más lejos. Si eran flojas, empieza el festival de las dudas eternas.</p>
         <p>Y aquí es donde entro en juego: tu incertidumbre es mi desafío. Investigo, pregunto y cuestiono cada punto hasta disipar la niebla porque <strong>no puedo crear algo que impacte de verdad sin entender primero qué hay detrás.</strong></p>
         <ul class="check-list">
@@ -1880,10 +1907,10 @@
         No es suerte. <span class="accent">Son</span><br /><span class="accent">decisiones.</span>
       </h2>
       <div class="section-body fade-in fade-in-delay-1">
-        <p><strong>Lo sé. Llevas tiempo trabajando duro en tu negocio pero a veces el esfuerzo no da los resultados que esperas.</strong><br />
-        La expectativa, esa maldita suposición que se sube a la parra con una facilidad insultante y que te hace creer que vas tarde, que vas mal o que todo debería estar funcionando mejor.</p>
+        <p><strong>Lo sé. Llevas tiempo trabajando duro en tu negocio pero a veces el esfuerzo no da los resultados que esperabas.</strong><br />
+        La expectativa, esa maldita suposición que se sube a la parra con una facilidad insultante y que te hace creer que vas tarde, mal, cuesta-abajo-y-sin-frenos o que todo debería estar funcionando mejor.</p>
         <p>A veces no falta trabajo: falta distancia.<strong> Parar, analizar, ordenar y descartar. Separar lo importante del ruido.</strong> Lo urgente de lo útil.</p>
-        <p>Un maestro en ralentizar el tiempo que te de espacio suficiente para respirar y componer una estrategia basada en datos que ayude a tu empresa a llegar a ese objetivo que seguro, no estaba tan lejos.</p>
+        <p>Alguien con la habilidad de ralentizar el tiempo de darte el espacio suficiente para respirar y componer una estrategia basada en datos que ayude a tu empresa a llegar a ese objetivo que seguro, no estaba tan lejos.</p>
       </div>
       <a href="#empecemos" class="btn-primary fade-in fade-in-delay-2">Te cuento cómo puedo ayudarte</a>
     </div>
@@ -1958,9 +1985,9 @@
   <section id="complicado" data-screen-label="06 Complicado">
     <div class="complicado-top">
       <div class="complicado-intro">
-        <h2 class="complicado-title fade-in">¿Pero tan complicado es?</h2>
+        <h2 class="complicado-title fade-in">¿A quiénes has ayudado antes?</h2>
         <div class="complicado-body fade-in fade-in-delay-1">
-          <p>He trabajado con Escape Rooms que querían mostrar lo que hacían sin spoilers, estudios de videojuegos que necesitan vender en modo triple A, instructores deportivos que buscaban motivar antes de la primera clase y plataformas B2B que tenían que explicar lo complejo de forma simple.</p>
+          <p>He trabajado con Escape Rooms que querían mostrar lo que hacían sin spoilers, estudios de videojuegos que necesitan vender en masa sin ser triple A, instructores deportivos que buscaban motivar antes de la primera clase y plataformas B2B que tenían que explicar lo complejo de forma simple.</p>
           <p>Diferentes sectores, mismo reto:<strong> que se les vea, se les entienda y se les compre.</strong></p>
         </div>
       </div>
@@ -2005,7 +2032,8 @@
             <span class="formula-accordion-arrow">+</span>
           </button>
           <div class="formula-accordion-body">
-            <p>Podría decirte que tengo la formula mágica para que con tan solo 10 pasos y 2 herramientas de IA, el alcance de tu marca se mulitplique x3 en solo 20 minutos, pero dejé la venta de humo con el primer video de youtube.</p>
+            <p>Podría decirte que tengo la formula mágica para que con tan solo 10 pasos y 2 herramientas de IA, el alcance de tu marca se mulitplique x3 en solo 20 minutos, pero dejé la venta de humo cuando el blue-ray era mainstream. Si quieres dar con la tecla del éxito, afinemos bien el oído.
+           </p>
           </div>
         </li>
         <li class="formula-item fade-in fade-in-delay-1">
@@ -2019,11 +2047,11 @@
         </li>
         <li class="formula-item fade-in fade-in-delay-2">
           <button class="formula-item-trigger" aria-expanded="false">
-            <span class="formula-item-text">Una adolescencia a mis espaldas</span>
+            <span class="formula-item-text">Non ti preoccupare, sé lo que hago</span>
             <span class="formula-accordion-arrow">+</span>
           </button>
           <div class="formula-accordion-body">
-            <p>Empecé en esto cuando las redes sociales no existían y nos comunicábamos a golpe de perdidas y SMS, esa época salvaje en la que preparar una entrevista exigía imprimir papeles porque el 3G aún no había llegado a la Blackberry. Desde entonces he grabado, editado, dirigido, producido y asesorado proyectos de todos los tamaños. Por eso, cuando me siento contigo probablemente ya he visto tu problema sus mutaciones y alguna versión suya en otro multiverso.</p>
+            <p>Empecé en esto cuando las redes sociales no existían y nos comunicábamos a golpe de perdidas, esa época salvaje en la que preparar una entrevista exigía imprimir papeles porque el 3G aún no había llegado a la Blackberry. Desde entonces he grabado, editado, dirigido, producido y asesorado proyectos de todos los tamaños. Por eso, cuando me siento contigo probablemente ya he visto tu problema, sus mutaciones y algun primo suyo en otro multiverso.</p>
           </div>
         </li>
       </ul>
