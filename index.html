@@ -878,7 +878,7 @@
       cursor: pointer;
       text-align: left;
       font-family: var(--font-display);
-      font-size: clamp(22px, 2.5vw, 34px);
+      font-size: 22px;
       text-transform: uppercase;
       letter-spacing: 0.02em;
       color: var(--black);
@@ -932,6 +932,27 @@
       line-height: 1.8;
       color: var(--gray);
       max-width: 600px;
+    }
+
+    .btn-ejemplos {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 8px 20px;
+      border: 1.5px solid var(--black);
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--black);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-ejemplos:hover {
+      background: var(--black);
+      color: var(--white);
     }
 
     /* ── SECCIÓN COMPLICADO ── */
@@ -1514,6 +1535,16 @@
 
     .tw-span.tw-fade-out { opacity: 0; }
 
+    .escucho-label--col { display: block; }
+    .tw-span--sub {
+      display: block;
+      font-size: 16px;
+      text-transform: none;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
     .tw-char {
       display: inline-block;
       opacity: 0;
@@ -1586,7 +1617,7 @@
       .hero-title          { font-size: clamp(44px, 6.5vw, 76px); }
       .section-title-mix   { font-size: clamp(34px, 5.5vw, 56px); }
       .decisiones-title    { font-size: clamp(38px, 6vw, 62px); }
-      .accordion-trigger   { font-size: clamp(28px, 4.5vw, 46px); }
+      .accordion-trigger   { font-size: 22px; }
       .donde-title         { font-size: clamp(32px, 5vw, 52px); }
       .complicado-title    { font-size: clamp(36px, 6vw, 56px); }
       .formula-title       { font-size: clamp(30px, 5vw, 52px); }
@@ -1696,7 +1727,7 @@
       /* Acordeón */
       #donde { padding: 56px 20px; }
       .donde-title { font-size: clamp(22px, 6vw, 36px); margin-bottom: 32px; }
-      .accordion-trigger { font-size: clamp(20px, 5.5vw, 26px); align-items: flex-start; }
+      .accordion-trigger { font-size: 22px; align-items: flex-start; }
       .escucho-label { white-space: normal; }
       .tw-span { display: inline; }
 
@@ -1945,36 +1976,40 @@
 
   <!-- ACORDEÓN -->
   <section id="donde" data-screen-label="05 Donde">
-    <h2 class="donde-title">¿Dónde quieres ver tu negocio?</h2>
+    <h2 class="donde-title">¿Cómo puedo ayudarte?</h2>
     <div class="accordion">
 
       <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="/Asesoría de comunicación">
-          <span class="escucho-label">Te escucho<span class="tw-span"></span></span>
+        <button class="accordion-trigger tw-trigger" data-tw-text="Asesoría de comunicación">
+          <span class="escucho-label escucho-label--col">Entiendo que quieres contar<span class="tw-span tw-span--sub"></span></span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p>Antes de lanzar campañas o diseñar una sola pieza me siento a entender tu marca. Quién eres, qué transmites y — lo más importante — qué deberías estar transmitiendo. Una sesión de estrategia puede cambiarte la forma de ver tu propio negocio.</p>
+          <p>Antes de lanzar campañas o diseñar una sola pieza, me siento a entender tu marca: <strong>quién eres, qué transmites y sobre todo, qué deberías estar transmitiendo.</strong> Lo básico en otras palabras aunque por algún motivo suele ser lo primero que solemos saltarnos y nunca abordamos.</p>
+          <button type="button" class="btn-ejemplos">Ver ejemplos</button>
+        </div>
+      </div>
+
+
+      <div class="accordion-item">
+        <button class="accordion-trigger tw-trigger" data-tw-text="Diseño web, gráfico y audiovisual">
+          <span class="escucho-label escucho-label--col">Convierto lo que quieres contar en contenido<span class="tw-span tw-span--sub"></span></span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <p>Creo y produzco contenido para que tu marca no solo est&eacute; presente sino que tenga sentido visual. Webs, v&iacute;deos y campa&ntilde;as pensadas para comunicar mejor, vender y que lo que se cree no sea solo &ldquo;algo que quede bonito&rdquo;.</p>
+          <button type="button" class="btn-ejemplos">Ver ejemplos</button>
         </div>
       </div>
 
       <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="/Producción audiovisual">
-          <span class="escucho-label">Te guio<span class="tw-span"></span></span>
+        <button class="accordion-trigger tw-trigger" data-tw-text="Grabación con dron">
+          <span class="escucho-label escucho-label--col">Cuando el contenido desde abajo no es suficiente<span class="tw-span tw-span--sub"></span></span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p>Vídeos corporativos, campañas para redes, spots publicitarios o contenido para pymes que quieren competir con las grandes. Con guion, con criterio y con casi 20 años de edición encima.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="/Grabación con dron">
-          <span class="escucho-label">Te elevo<span class="tw-span"></span></span>
-          <span class="accordion-icon">+</span>
-        </button>
-        <div class="accordion-body">
-          <p>Porque hay perspectivas que desde el suelo simplemente no existen. Vídeo aéreo profesional para inmobiliarias, turismo, deportes o cualquier proyecto que necesite una imagen a vista de pájaro.</p>
+          <p>Porque hay perspectivas que desde el suelo simplemente no existen. Vídeos aéreo ideales para inmobiliarias, turismo, deportes, eventos o cualquier proyecto que necesite subir la cámara unos metros más.</p>
+          <button type="button" class="btn-ejemplos">Ver ejemplos</button>
         </div>
       </div>
 
