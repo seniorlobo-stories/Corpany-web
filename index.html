@@ -828,20 +828,52 @@
     }
 
     .empecemos-social a {
-      color: var(--black);
-      opacity: 0.5;
-      transition: opacity 0.2s;
       text-decoration: none;
-      display: flex;
-      align-items: center;
     }
 
     .empecemos-social a:hover { opacity: 1; }
 
+    /* ── BOTONES SOCIALES ── */
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: var(--turquesa);
+      border: 2px solid var(--black);
+      border-radius: 50%;
+      box-shadow: 3px 3px 0 var(--black);
+      color: var(--black);
+      text-decoration: none;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .social-btn:hover {
+      box-shadow: 1px 1px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .social-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .social-btn--light {
+      background: var(--white);
+      border-color: var(--black);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .social-btn--light:hover {
+      box-shadow: 1px 1px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
     /* ── ACORDEÓN ── */
     #donde {
       padding: 48px 100px;
-      background: var(--white);
+      background: var(--carne);
       border-top: 1px solid var(--light-gray);
     }
 
@@ -958,7 +990,7 @@
     /* ── SECCIÓN COMPLICADO ── */
     #complicado {
       padding: 48px 80px 48px;
-      background: var(--carne);
+      background: var(--white);
       border-top: 1px solid var(--light-gray);
     }
 
@@ -1396,12 +1428,7 @@
     }
 
     .footer-social a {
-      color: var(--white);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      opacity: 0.7;
-      transition: opacity 0.2s;
     }
 
     .footer-social a:hover { opacity: 1; }
@@ -1617,7 +1644,7 @@
       .hero-title          { font-size: clamp(44px, 6.5vw, 76px); }
       .section-title-mix   { font-size: clamp(34px, 5.5vw, 56px); }
       .decisiones-title    { font-size: clamp(38px, 6vw, 62px); }
-      .accordion-trigger   { font-size: 22px; }
+      .accordion-trigger   { font-size: 20px; }
       .donde-title         { font-size: clamp(32px, 5vw, 52px); }
       .complicado-title    { font-size: clamp(36px, 6vw, 56px); }
       .formula-title       { font-size: clamp(30px, 5vw, 52px); }
@@ -1727,9 +1754,10 @@
       /* Acordeón */
       #donde { padding: 56px 20px; }
       .donde-title { font-size: clamp(22px, 6vw, 36px); margin-bottom: 32px; }
-      .accordion-trigger { font-size: 22px; align-items: flex-start; }
+      .accordion-trigger { font-size: 20px; align-items: flex-start; }
       .escucho-label { white-space: normal; }
       .tw-span { display: inline; }
+      .tw-span--sub { display: block; }
 
       /* Complicado */
       #complicado { padding: 56px 20px 48px; }
@@ -1873,7 +1901,7 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#diferente">Servicios</a></li>
+      <li><a href="#donde">Servicios</a></li>
       <li><a href="#donde">Sobre mí</a></li>
       <li><a href="#letsdance" class="nav-cta">Hablemos</a></li>
     </ul>
@@ -1890,7 +1918,7 @@
       <p class="hero-body fade-in fade-in-delay-2">Porque tener algo importante que decir está muy bien pero <strong>saber decirlo, aún está mejor.</strong></p>
       <div class="hero-actions fade-in fade-in-delay-3">
         <a href="#letsdance" class="btn-primary">ME GUSTA, EMPECEMOS</a>
-        <a href="#diferente" class="btn-ghost">Dime más</a>
+        <a href="#diferente" class="btn-outline">Dime más</a>
       </div>
     </div>
     <div class="diferente-visual">
@@ -1927,7 +1955,7 @@
         </ul>
         <p>Mi objetivo es <strong>ser una extensión de tu negocio, una pieza de ayuda externa a la que acudir cuando el oráculo no responde</strong></p>
       </div>
-      <a href="#decisiones" class="read-more fade-in fade-in-delay-2">Vamos a escuchar esa canción</a>
+      <a href="#decisiones" class="btn-primary">Vamos a escuchar esa canción</a>
     </div>
   </section>
 
@@ -1943,7 +1971,7 @@
         <p>A veces no falta trabajo: falta distancia.<strong> Parar, analizar, ordenar y descartar. Separar lo importante del ruido.</strong> Lo urgente de lo útil.</p>
         <p>Alguien con la habilidad de ralentizar el tiempo de darte el espacio suficiente para respirar y componer una estrategia basada en datos que ayude a tu empresa a llegar a ese objetivo que seguro, no estaba tan lejos.</p>
       </div>
-      <a href="#empecemos" class="btn-primary fade-in fade-in-delay-2">Te cuento cómo puedo ayudarte</a>
+      <a href="#empecemos" class="btn-primary">Te cuento cómo puedo ayudarte</a>
     </div>
     <div class="decisiones-visual fade-in fade-in-delay-1">
       <div class="chart-card">
@@ -1965,10 +1993,10 @@
   <section id="empecemos" data-screen-label="04 Empecemos">
     <h2 class="empecemos-title">Empecemos</h2>
     <div class="empecemos-social">
-      <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener">
+      <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener" class="social-btn social-btn--light">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
       </a>
-      <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener">
+      <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener" class="social-btn social-btn--light">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 014 0v4M12 10v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </a>
     </div>
@@ -1980,8 +2008,8 @@
     <div class="accordion">
 
       <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="Asesoría de comunicación">
-          <span class="escucho-label escucho-label--col">Entiendo que quieres contar<span class="tw-span tw-span--sub"></span></span>
+        <button class="accordion-trigger tw-trigger" data-tw-text="Entiendo que quieres contar">
+          <span class="escucho-label escucho-label--col">Asesoría de comunicación<span class="tw-span tw-span--sub"></span></span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
@@ -1992,19 +2020,19 @@
 
 
       <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="Diseño web, gráfico y audiovisual">
-          <span class="escucho-label escucho-label--col">Convierto lo que quieres contar en contenido<span class="tw-span tw-span--sub"></span></span>
+        <button class="accordion-trigger tw-trigger" data-tw-text="Convierto lo que quieres contar en contenido">
+          <span class="escucho-label escucho-label--col">Diseño web, gráfico y edición de videos<span class="tw-span tw-span--sub"></span></span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
-          <p>Creo y produzco contenido para que tu marca no solo est&eacute; presente sino que tenga sentido visual. Webs, v&iacute;deos y campa&ntilde;as pensadas para comunicar mejor, vender y que lo que se cree no sea solo &ldquo;algo que quede bonito&rdquo;.</p>
+          <p>Creo y produzco contenido para que tu marca no solo esté presente sino que tenga sentido visual. Webs, vídeos y campañas pensadas para comunicar mejor, vender y que lo que se cree no sea solo algo que quede bonito.</p>
           <button type="button" class="btn-ejemplos">Ver ejemplos</button>
         </div>
       </div>
 
       <div class="accordion-item">
-        <button class="accordion-trigger tw-trigger" data-tw-text="Grabación con dron">
-          <span class="escucho-label escucho-label--col">Cuando el contenido desde abajo no es suficiente<span class="tw-span tw-span--sub"></span></span>
+        <button class="accordion-trigger tw-trigger" data-tw-text="Cuando el contenido necesita un impulso aéreo">
+          <span class="escucho-label escucho-label--col">Grabación con dron<span class="tw-span tw-span--sub"></span></span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-body">
@@ -2020,10 +2048,18 @@
   <section id="complicado" data-screen-label="06 Complicado">
     <div class="complicado-top">
       <div class="complicado-intro">
-        <h2 class="complicado-title fade-in">¿A quiénes has ayudado antes?</h2>
+        <h2 class="complicado-title fade-in">En episodios anteriores...</h2>
         <div class="complicado-body fade-in fade-in-delay-1">
-          <p>He trabajado con Escape Rooms que querían mostrar lo que hacían sin spoilers, estudios de videojuegos que necesitan vender en masa sin ser triple A, instructores deportivos que buscaban motivar antes de la primera clase y plataformas B2B que tenían que explicar lo complejo de forma simple.</p>
+          <p>Empecé en este mundo cuando las redes sociales no existían y nos comunicábamos a golpe de perdidas.</p>
+          <p>Mis casi 20 años de experiencia me han llevado a entender:</p>
+          <ul style="padding-left: 1.5rem;">
+            <li><strong>Escape Rooms</strong> que querían mostrar lo que hacían sin spoilers,</li>
+            <li><strong>Estudios de videojuegos</strong> que necesitan vender en masa sin ser triple A,</li>
+            <li><strong>Instructores deportivos</strong> que buscaban motivar antes de la primera clase</li>
+            <li><strong>Plataformas B2B</strong> que tenían que explicar lo complejo de forma simple.</li>
+          </ul>
           <p>Diferentes sectores, mismo reto:<strong> que se les vea, se les entienda y se les compre.</strong></p>
+          <p>Por eso, cuando me siento contigo probablemente ya he visto tu problema, sus mutaciones y algun primo suyo en otro multiverso.</p>
         </div>
       </div>
       <div class="complicado-right">
@@ -2050,55 +2086,12 @@
     </div>
   </section>
 
-  <!-- FÓRMULA -->
-  <section id="formula" data-screen-label="07 Formula">
-    <div class="formula-left">
-      <h2 class="formula-title fade-in">¿Y la fórmula mágica?</h2>
-      <div class="formula-sub fade-in fade-in-delay-1">
-        <p>Siento decir que la magia no existe, pero todo sector tiene su truco, y yo he recabado un puñado de ellos.</p>
-        <p>Te cuento en qué puedo ayudarte sin caer en promesas vacías y presentaciones de powerpoint sin fundamento.</p>
-      </div>
-    </div>
-    <div class="formula-right">
-      <ul class="formula-list">
-        <li class="formula-item fade-in">
-          <button class="formula-item-trigger" aria-expanded="false">
-            <span class="formula-item-text">No me cuentes milongas</span>
-            <span class="formula-accordion-arrow">+</span>
-          </button>
-          <div class="formula-accordion-body">
-            <p>Podría decirte que tengo la formula mágica para que con tan solo 10 pasos y 2 herramientas de IA, el alcance de tu marca se mulitplique x3 en solo 20 minutos, pero dejé la venta de humo cuando el blue-ray era mainstream. Si quieres dar con la tecla del éxito, afinemos bien el oído.
-           </p>
-          </div>
-        </li>
-        <li class="formula-item fade-in fade-in-delay-1">
-          <button class="formula-item-trigger" aria-expanded="false">
-            <span class="formula-item-text">Primero la estrategia, luego la fama</span>
-            <span class="formula-accordion-arrow">+</span>
-          </button>
-          <div class="formula-accordion-body">
-            <p>Grabar sin estrategia es como construir una casa empezando por el tejado. Antes de encender cualquier equipo necesito entender qué quieres conseguir, a quién le hablas y qué historia tiene sentido contar. Solo entonces la imagen empieza a ser útil de verdad.</p>
-          </div>
-        </li>
-        <li class="formula-item fade-in fade-in-delay-2">
-          <button class="formula-item-trigger" aria-expanded="false">
-            <span class="formula-item-text">Non ti preoccupare, sé lo que hago</span>
-            <span class="formula-accordion-arrow">+</span>
-          </button>
-          <div class="formula-accordion-body">
-            <p>Empecé en esto cuando las redes sociales no existían y nos comunicábamos a golpe de perdidas, esa época salvaje en la que preparar una entrevista exigía imprimir papeles porque el 3G aún no había llegado a la Blackberry. Desde entonces he grabado, editado, dirigido, producido y asesorado proyectos de todos los tamaños. Por eso, cuando me siento contigo probablemente ya he visto tu problema, sus mutaciones y algun primo suyo en otro multiverso.</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <!-- LET'S DANCE -->
   <section id="letsdance" data-screen-label="08 Lets Dance">
-    <div class="letsdance-box">
+    <div class="letsdance-box card card-colored">
       <h2 class="letsdance-title">Let's dance</h2>
       <p class="letsdance-body">Llevas tiempo dándole vueltas a cómo mejorar la marca de tu empresa. Yo también le he dado vueltas a cómo poder ayudarte</p>
-      <a href="https://www.instagram.com/companycorrupt" target="_blank" rel="noopener noreferrer" class="btn-primary">Empecemos a trabajar</a>
+      <a href="https://www.instagram.com/companycorrupt" target="_blank" rel="noopener noreferrer" class="btn-outline">Empecemos a trabajar</a>
     </div>
   </section>
 
@@ -2115,13 +2108,13 @@
         <a href="#">
           <img src="Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="footer-logo" />
         </a>
-        <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener" class="social-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-2-2 2 2 0 00-2 2v6h-4v-6a6 6 0 016-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
         </a>
-        <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener" class="social-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
         </a>
-        <a href="#" aria-label="Email">
+        <a href="#" aria-label="Email" class="social-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
       </div>
