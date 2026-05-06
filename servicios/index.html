@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios — Corpany</title>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('/space-grotesk/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --turquesa: #00d2c5;
+      --naranja: #ffc272;
+      --carne: #ffe3b3;
+      --inferno: #B20000;
+      --azul: #27798f;
+      --azulmarino: #263c47;
+      --black: #1a1a1a;
+      --white: #ffffff;
+      --gray: #888;
+      --light-gray: #e8e8e4;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 0 8px;
+      height: 56px;
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 14px;
+      box-shadow: 4px 4px 0 var(--black);
+      gap: 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-gif {
+      height: 85px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .nav-links a:hover { background: var(--carne); }
+
+    .nav-links li:last-child { position: absolute; right: 16px; }
+
+    .nav-links .nav-cta {
+      background: var(--turquesa);
+      color: var(--black);
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+      opacity: 1;
+    }
+
+    .nav-links .nav-cta:hover {
+      background: var(--turquesa);
+      box-shadow: 1px 1px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .nav-hamburger { display: none; }
+
+    /* ── RESPONSIVE MÓVIL ── */
+    @media (max-width: 768px) {
+      nav { top: 10px; width: calc(100% - 24px); padding: 0 12px 0 8px; height: 52px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 74px;
+        left: 12px;
+        right: 12px;
+        background: var(--white);
+        border: 2px solid var(--black);
+        border-radius: 14px;
+        box-shadow: 4px 4px 0 var(--black);
+        padding: 16px;
+        gap: 4px;
+        z-index: 99;
+      }
+      .nav-links.open li { width: 100%; }
+      .nav-links.open li:last-child { position: static; }
+      .nav-links.open a { font-size: 14px; display: block; padding: 10px 14px; border-radius: 8px; }
+      .nav-links.open a:hover { background: var(--carne); }
+      .nav-links.open .nav-cta { text-align: center; margin-top: 4px; }
+      .nav-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 36px;
+        height: 36px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 8px;
+      }
+      .nav-hamburger span { display: block; height: 2px; background: var(--black); border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
+      .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+      .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+
+    /* ── BTN PRIMARY ── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--turquesa);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      text-decoration: none;
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0 var(--black);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-primary:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(2px, 2px); }
+    .btn-primary:active { box-shadow: 0 0 0 var(--black); transform: translate(4px, 4px); }
+
+    /* ── SECCIÓN 1: NEOCARD BANNER ── */
+    .neocard-section {
+      padding: 18px 0 18px;
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .neocard {
+      background: var(--carne);
+      border: 2px solid var(--black);
+      border-radius: 12px;
+      box-shadow: 4px 4px 0 var(--black);
+      padding: 26px 40px;
+    }
+
+    .neocard-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .neocard-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .neocard-badge {
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      background: var(--naranja);
+      padding: 6px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECCIÓN 2: TICKER MARQUEE ── */
+    .ticker {
+      border-top: 2px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      background: var(--white);
+      height: 52px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      margin-top: 110px;
+    }
+
+    .ticker-track {
+      display: flex;
+      animation: ticker-scroll 38s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-track span {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--black);
+    }
+
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECCIÓN 3: DOS COLUMNAS ── */
+    .two-col-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding: 20px 0;
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .two-col-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--gray);
+      margin-bottom: 14px;
+    }
+
+    .two-col-text p:last-of-type { margin-bottom: 28px; }
+
+    .video-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .video-placeholder {
+      border: 2px solid var(--black);
+      border-radius: 12px;
+      box-shadow: 4px 4px 0 var(--black);
+      aspect-ratio: 16 / 9;
+      background: var(--light-gray);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .video-placeholder img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    @keyframes carouselFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .video-placeholder img { animation: carouselFade 0.35s ease; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 36px;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    .video-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    /* ── TNAV (copiado de index.html) ── */
+    .tnav-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      font-family: var(--font-body);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+    .tnav-btn:hover { box-shadow: 1px 1px 0 var(--black); transform: translate(2px, 2px); }
+
+    .tnav-dot {
+      width: 32px;
+      height: 32px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 6px;
+      box-shadow: 2px 2px 0 var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      font-family: var(--font-body);
+      transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s;
+    }
+    .tnav-dot:hover { box-shadow: 1px 1px 0 var(--black); transform: translate(1px, 1px); }
+    .tnav-dot.active { background: var(--turquesa); box-shadow: 2px 2px 0 var(--black); }
+
+    .tnav-ellipsis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray);
+      font-family: var(--font-body);
+    }
+
+    .tnav-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── RESPONSIVE MÓVIL ── */
+    @media (max-width: 768px) {
+      .neocard-section { width: calc(100% - 24px); }
+      .neocard-heading { font-size: 18px; }
+      .neocard-badge { padding: 5px 10px; font-size: 10px; }
+      .neocard-badges { gap: 6px; }
+      .two-col-section { grid-template-columns: 1fr; gap: 32px; padding: 15px 0 32px; width: calc(100% - 24px); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="nav-logo-gif" />
+    </a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/servicios">Servicios</a></li>
+      <li><a href="/#complicado">Sobre mí</a></li>
+      <li><a href="/#letsdance" class="nav-cta">Hablemos</a></li>
+    </ul>
+  </nav>
+
+  <!-- SECCIÓN 1: TICKER MARQUEE -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>-- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ---------- -- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ---------- -- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ----------&nbsp;</span>
+      <span>-- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ---------- -- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ---------- -- PROBATIA ---------- CODE CONTRACT ---------- COCO ROOM ESCAPE ------ FLYNN'S ARCADE ----------&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: NEOCARD BANNER -->
+  <div class="neocard-section" id="asesoria-comunicacion">
+    <div class="neocard">
+      <h2 class="neocard-heading">Asesoría de comunicación</h2>
+      <div class="neocard-badges">
+        <span class="neocard-badge">Auditoría de marca</span>
+        <span class="neocard-badge">Definición de tono y voz</span>
+        <span class="neocard-badge">Mensajes clave</span>
+        <span class="neocard-badge">Estrategia de contenido</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: DOS COLUMNAS -->
+  <div class="two-col-section">
+    <div class="two-col-text">
+      <p>Algunas marcas llegan con una web a medias, con redes que no les representan, otras con una idea muy clara en la cabeza pero borrosa cuando intentan explicarla…. <strong>Mi trabajo consiste en sentarme con ellas y poner orden.</strong></p>
+      <p>He asesorado a proyectos que necesitaban definir su tono de voz, explicar mejor sus servicios, preparar un lanzamiento o simplemente dejar de comunicar como si estuvieran rellenando una plantilla genérica de internet.</p>
+      <p>El resultado no siempre es una campaña: a veces es una decisión estructurada y tomada a tiempo.</p>
+      <a href="#letsdance" class="btn-primary">Dime precios</a>
+    </div>
+    <div class="two-col-video">
+      <div class="video-placeholder" id="videoPlaceholder"></div>
+      <div class="video-nav" id="videoNav"></div>
+    </div>
+  </div>
+
+  <!-- SEPARADOR -->
+  <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">×</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script>
+    // ── Carrusel de imágenes — añade o quita rutas aquí
+    const images = [
+      '/fotos_carrusel_servicios/1.png',
+      '/fotos_carrusel_servicios/2.png',
+      '/fotos_carrusel_servicios/3.png',
+      '/fotos_carrusel_servicios/4.png',
+      '/fotos_carrusel_servicios/5.png',
+      '/fotos_carrusel_servicios/6.png',
+    ];
+
+    let current = 0;
+    const placeholder = document.getElementById('videoPlaceholder');
+    const nav = document.getElementById('videoNav');
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('open');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.addEventListener('transitionend', () => { lightboxImg.src = ''; }, { once: true });
+    }
+
+    function renderImage(index) {
+      const src = images[index];
+      placeholder.innerHTML = `<img src="${src}" alt="Imagen ${index + 1}" />`;
+      placeholder.querySelector('img').addEventListener('click', () => openLightbox(src));
+    }
+
+    function getPageItems() {
+      const n = images.length;
+      if (n <= 5) return Array.from({ length: n }, (_, i) => i);
+      if (current <= 2) return [0, 1, 2, '...', n - 1];
+      if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
+      return [0, '...', current, '...', n - 1];
+    }
+
+    function renderNav() {
+      if (images.length <= 1) { nav.innerHTML = ''; return; }
+
+      const items = getPageItems();
+      const dots = items.map(item =>
+        item === '...'
+          ? `<span class="tnav-ellipsis">…</span>`
+          : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
+      ).join('');
+
+      nav.innerHTML = `<button class="tnav-btn" id="vPrev">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="vNext">&#8250;</button>`;
+
+      document.getElementById('vPrev').addEventListener('click', () => goTo(current - 1));
+      document.getElementById('vNext').addEventListener('click', () => goTo(current + 1));
+      nav.querySelectorAll('.tnav-dot').forEach(btn => {
+        btn.addEventListener('click', () => goTo(+btn.dataset.i));
+      });
+    }
+
+    function goTo(index) {
+      current = (index + images.length) % images.length;
+      renderImage(current);
+      renderNav();
+    }
+
+    renderImage(current);
+    renderNav();
+
+    // ── Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger?.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
