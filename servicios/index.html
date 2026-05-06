@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servicios — Corpany</title>
   <script src="https://player.vimeo.com/api/player.js"></script>
+  <script async src="//www.instagram.com/embed.js"></script>
   <style>
     @font-face {
       font-family: 'Space Grotesk';
@@ -418,6 +419,35 @@
     .neocard.neocard-video { background: #c5ede9; }
     .neocard.neocard-video .neocard-badge { background: var(--turquesa); }
 
+    .neocard.neocard-drone { background: #c2d4da; }
+    .neocard.neocard-drone .neocard-badge { background: var(--azulmarino); color: var(--white); }
+
+    .video-dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .video-placeholder--vertical {
+      aspect-ratio: 9 / 16;
+    }
+
+    .video-placeholder--vertical .instagram-media {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .video-placeholder--vertical iframe {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
     /* ── RESPONSIVE MÓVIL ── */
     @media (max-width: 768px) {
       .neocard-section { width: calc(100% - 24px); }
@@ -513,6 +543,43 @@
 
   <!-- SEPARADOR -->
   <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
+
+  <!-- SECCIÓN 6: NEOCARD GRABACIÓN CON DRON -->
+  <div class="neocard-section" id="grabacion-dron">
+    <div class="neocard neocard-drone">
+      <h2 class="neocard-heading"><img src="/Iconos/drone-svgrepo-com.svg" alt="" aria-hidden="true" style="width:28px;height:28px;">Grabación con dron</h2>
+      <div class="neocard-badges">
+        <span class="neocard-badge">DJI Neo 2</span>
+        <span class="neocard-badge">Inmobiliaria/Arquitectura</span>
+        <span class="neocard-badge">Turismo</span>
+        <span class="neocard-badge">Eventos/Deportes</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 7: DOS COLUMNAS DRON -->
+  <div class="two-col-section">
+    <div class="two-col-text">
+      <p>Dji Neo 2 es pequeño pero matón aunque no basta con volarlo alto, eso también lo hace una paloma con demasiada confianza.</p>
+      <p>Trabajo el plano aéreo buscando <strong>una perspectiva que el ojo humano no es capaz de alcanzar de forma natural,</strong> poniendo especial incapié en planos que tengan sentido en la pieza final.</p>
+      <p>Ideal para espacios, eventos o proyectos que necesitan el impacto perfecto que hace que alguien deje de deslizar el dedo durante tres segundos.</p>
+      <a href="#letsdance" class="btn-primary">Dime precios</a>
+    </div>
+    <div class="two-col-video">
+      <div class="video-dual">
+        <div class="video-placeholder video-placeholder--vertical" id="dronLeft"></div>
+        <div class="video-placeholder video-placeholder--vertical" id="dronRight"></div>
+      </div>
+      <div class="video-nav" id="videoNav3"></div>
+    </div>
+  </div>
+
+  <!-- SEPARADOR -->
+  <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
+
+  <!-- REELS DRON (templates ocultos) -->
+  <template id="dron-v1"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DWiweBVDZXi/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14"></blockquote></template>
+  <template id="dron-v2"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DXElRoZCFU0/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14"></blockquote></template>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
@@ -629,6 +696,62 @@
       }
 
       renderVideo(current);
+      renderNav();
+    })();
+
+    // ── Carrusel 3: Grabación con dron — añade templates "dron-vN" para más reels
+    (function() {
+      const embeds = [
+        document.getElementById('dron-v1')?.innerHTML,
+        document.getElementById('dron-v2')?.innerHTML,
+      ].filter(Boolean);
+
+      let current = 0;
+      const leftSlot  = document.getElementById('dronLeft');
+      const rightSlot = document.getElementById('dronRight');
+      const nav       = document.getElementById('videoNav3');
+
+      function processEmbeds() {
+        if (window.instgrm) window.instgrm.Embeds.process();
+      }
+
+      function renderVideos(index) {
+        leftSlot.innerHTML  = embeds[index]     || '';
+        rightSlot.innerHTML = embeds[index + 1] || '';
+        processEmbeds();
+      }
+
+      function getPageItems() {
+        const n = embeds.length;
+        if (n <= 5) return Array.from({ length: n }, (_, i) => i);
+        if (current <= 2) return [0, 1, 2, '...', n - 1];
+        if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
+        return [0, '...', current, '...', n - 1];
+      }
+
+      function renderNav() {
+        if (embeds.length <= 1) { nav.innerHTML = ''; return; }
+        const items = getPageItems();
+        const dots = items.map(item =>
+          item === '...'
+            ? `<span class="tnav-ellipsis">…</span>`
+            : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
+        ).join('');
+        nav.innerHTML = `<button class="tnav-btn" id="vPrev3">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="vNext3">&#8250;</button>`;
+        document.getElementById('vPrev3').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('vNext3').addEventListener('click', () => goTo(current + 1));
+        nav.querySelectorAll('.tnav-dot').forEach(btn => {
+          btn.addEventListener('click', () => goTo(+btn.dataset.i));
+        });
+      }
+
+      function goTo(index) {
+        current = (index + embeds.length) % embeds.length;
+        renderVideos(current);
+        renderNav();
+      }
+
+      renderVideos(current);
       renderNav();
     })();
 
