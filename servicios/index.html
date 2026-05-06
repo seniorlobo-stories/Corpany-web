@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servicios — Corpany</title>
+  <script src="https://player.vimeo.com/api/player.js"></script>
   <style>
     @font-face {
       font-family: 'Space Grotesk';
@@ -195,7 +196,7 @@
       border: 2px solid var(--black);
       border-radius: 12px;
       box-shadow: 4px 4px 0 var(--black);
-      padding: 26px 40px;
+      padding: 26px 20px;
     }
 
     .neocard-heading {
@@ -414,6 +415,9 @@
       gap: 6px;
     }
 
+    .neocard.neocard-video { background: #c5ede9; }
+    .neocard.neocard-video .neocard-badge { background: var(--turquesa); }
+
     /* ── RESPONSIVE MÓVIL ── */
     @media (max-width: 768px) {
       .neocard-section { width: calc(100% - 24px); }
@@ -421,6 +425,7 @@
       .neocard-badge { padding: 5px 10px; font-size: 10px; }
       .neocard-badges { gap: 6px; }
       .two-col-section { grid-template-columns: 1fr; gap: 32px; padding: 15px 0 32px; width: calc(100% - 24px); }
+      .neocard { padding: 26px 20px; }
       .ticker { margin-top: 82px; }
     }
   </style>
@@ -452,7 +457,7 @@
   <!-- SECCIÓN 2: NEOCARD BANNER -->
   <div class="neocard-section" id="asesoria-comunicacion">
     <div class="neocard">
-      <h2 class="neocard-heading">Asesoría de comunicación</h2>
+      <h2 class="neocard-heading"><img src="/Iconos/microphone-speak-say-tell-svgrepo-com.svg" alt="" aria-hidden="true" style="width:28px;height:28px;">Asesoría de comunicación</h2>
       <div class="neocard-badges">
         <span class="neocard-badge">Auditoría de marca</span>
         <span class="neocard-badge">Definición de tono y voz</span>
@@ -479,6 +484,36 @@
   <!-- SEPARADOR -->
   <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
 
+  <!-- SECCIÓN 4: NEOCARD GRABACIÓN DE VÍDEO -->
+  <div class="neocard-section" id="grabacion-video">
+    <div class="neocard neocard-video">
+      <h2 class="neocard-heading"><img src="/Iconos/video-camera-filled-svgrepo-com.svg" alt="" aria-hidden="true" style="width:28px;height:28px;">Grabación y edición de vídeo</h2>
+      <div class="neocard-badges">
+        <span class="neocard-badge">Edición y montaje</span>
+        <span class="neocard-badge">Grabación de planos</span>
+        <span class="neocard-badge">Vídeos corporativos</span>
+        <span class="neocard-badge">Grabación de eventos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: DOS COLUMNAS VÍDEO -->
+  <div class="two-col-section">
+    <div class="two-col-text">
+      <p>El vídeo no está para decorar una web ni para llenar redes porque es martes y toca subir algo. Está para contar mejor lo que haces y acercar a la gente a una decisión.</p>
+      <p>Trabajo piezas audiovisuales que ayudan a explicar una idea que en texto sería más difícil de digerir porque <strong>una imagen bien pensada es más útil que 40 párrafos, 3 reuniones y 1 crisis interna.</strong></p>
+      <p>Unpopular opinion: las marcas cambian y hacen rebranding cada X años pero hay creaciones antiguas que se exhiben como obras de arte.</p>
+      <a href="#letsdance" class="btn-primary">Dime precios</a>
+    </div>
+    <div class="two-col-video">
+      <div class="video-placeholder" id="videoPlaceholder2"></div>
+      <div class="video-nav" id="videoNav2"></div>
+    </div>
+  </div>
+
+  <!-- SEPARADOR -->
+  <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose">×</button>
@@ -486,19 +521,116 @@
   </div>
 
   <script>
-    // ── Carrusel de imágenes — añade o quita rutas aquí
-    const images = [
-      '/fotos_carrusel_servicios/1.png',
-      '/fotos_carrusel_servicios/2.png',
-      '/fotos_carrusel_servicios/3.png',
-      '/fotos_carrusel_servicios/4.png',
-      '/fotos_carrusel_servicios/5.png',
-      '/fotos_carrusel_servicios/6.png',
-    ];
+    function makeCarousel(images, placeholderId, navId, prevId, nextId) {
+      let current = 0;
+      const placeholder = document.getElementById(placeholderId);
+      const nav = document.getElementById(navId);
 
-    let current = 0;
-    const placeholder = document.getElementById('videoPlaceholder');
-    const nav = document.getElementById('videoNav');
+      function renderImage(index) {
+        const src = images[index];
+        placeholder.innerHTML = `<img src="${src}" alt="Imagen ${index + 1}" />`;
+        placeholder.querySelector('img').addEventListener('click', () => openLightbox(src));
+      }
+
+      function getPageItems() {
+        const n = images.length;
+        if (n <= 5) return Array.from({ length: n }, (_, i) => i);
+        if (current <= 2) return [0, 1, 2, '...', n - 1];
+        if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
+        return [0, '...', current, '...', n - 1];
+      }
+
+      function renderNav() {
+        if (images.length <= 1) { nav.innerHTML = ''; return; }
+        const items = getPageItems();
+        const dots = items.map(item =>
+          item === '...'
+            ? `<span class="tnav-ellipsis">…</span>`
+            : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
+        ).join('');
+        nav.innerHTML = `<button class="tnav-btn" id="${prevId}">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="${nextId}">&#8250;</button>`;
+        document.getElementById(prevId).addEventListener('click', () => goTo(current - 1));
+        document.getElementById(nextId).addEventListener('click', () => goTo(current + 1));
+        nav.querySelectorAll('.tnav-dot').forEach(btn => {
+          btn.addEventListener('click', () => goTo(+btn.dataset.i));
+        });
+      }
+
+      function goTo(index) {
+        current = (index + images.length) % images.length;
+        renderImage(current);
+        renderNav();
+      }
+
+      renderImage(current);
+      renderNav();
+    }
+
+    // ── Carrusel 1: Asesoría de comunicación — añade o quita rutas aquí
+    makeCarousel(
+      [
+        '/fotos_carrusel_servicios/1.png',
+        '/fotos_carrusel_servicios/2.png',
+        '/fotos_carrusel_servicios/3.png',
+        '/fotos_carrusel_servicios/4.png',
+        '/fotos_carrusel_servicios/5.png',
+        '/fotos_carrusel_servicios/6.png',
+      ],
+      'videoPlaceholder', 'videoNav', 'vPrev', 'vNext'
+    );
+
+    // ── Carrusel 2: Grabación y edición de vídeo — añade o quita vídeos aquí
+    (function() {
+      const videos = [
+        { src: 'https://player.vimeo.com/video/454683738?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'AMBAR 2º aniversario' },
+        { src: 'https://player.vimeo.com/video/1189922431?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'Code Contract — testimonio' },
+        { src: 'https://player.vimeo.com/video/535265419?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'WCA Reactions' },
+        { src: 'https://player.vimeo.com/video/454798177?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'Aula Smart School' },
+        { src: 'https://player.vimeo.com/video/454722720?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'Trailer Alicante + Valencia' },
+        { src: 'https://player.vimeo.com/video/502990171?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479', title: 'Recopilación vídeos' },
+      ];
+      let current = 0;
+      const placeholder = document.getElementById('videoPlaceholder2');
+      const nav = document.getElementById('videoNav2');
+
+      function renderVideo(index) {
+        const { src, title } = videos[index];
+        placeholder.innerHTML = `<iframe src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="${title}"></iframe>`;
+      }
+
+      function getPageItems() {
+        const n = videos.length;
+        if (n <= 5) return Array.from({ length: n }, (_, i) => i);
+        if (current <= 2) return [0, 1, 2, '...', n - 1];
+        if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
+        return [0, '...', current, '...', n - 1];
+      }
+
+      function renderNav() {
+        if (videos.length <= 1) { nav.innerHTML = ''; return; }
+        const items = getPageItems();
+        const dots = items.map(item =>
+          item === '...'
+            ? `<span class="tnav-ellipsis">…</span>`
+            : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
+        ).join('');
+        nav.innerHTML = `<button class="tnav-btn" id="vPrev2">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="vNext2">&#8250;</button>`;
+        document.getElementById('vPrev2').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('vNext2').addEventListener('click', () => goTo(current + 1));
+        nav.querySelectorAll('.tnav-dot').forEach(btn => {
+          btn.addEventListener('click', () => goTo(+btn.dataset.i));
+        });
+      }
+
+      function goTo(index) {
+        current = (index + videos.length) % videos.length;
+        renderVideo(current);
+        renderNav();
+      }
+
+      renderVideo(current);
+      renderNav();
+    })();
 
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -516,48 +648,6 @@
       lightbox.classList.remove('open');
       lightbox.addEventListener('transitionend', () => { lightboxImg.src = ''; }, { once: true });
     }
-
-    function renderImage(index) {
-      const src = images[index];
-      placeholder.innerHTML = `<img src="${src}" alt="Imagen ${index + 1}" />`;
-      placeholder.querySelector('img').addEventListener('click', () => openLightbox(src));
-    }
-
-    function getPageItems() {
-      const n = images.length;
-      if (n <= 5) return Array.from({ length: n }, (_, i) => i);
-      if (current <= 2) return [0, 1, 2, '...', n - 1];
-      if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
-      return [0, '...', current, '...', n - 1];
-    }
-
-    function renderNav() {
-      if (images.length <= 1) { nav.innerHTML = ''; return; }
-
-      const items = getPageItems();
-      const dots = items.map(item =>
-        item === '...'
-          ? `<span class="tnav-ellipsis">…</span>`
-          : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
-      ).join('');
-
-      nav.innerHTML = `<button class="tnav-btn" id="vPrev">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="vNext">&#8250;</button>`;
-
-      document.getElementById('vPrev').addEventListener('click', () => goTo(current - 1));
-      document.getElementById('vNext').addEventListener('click', () => goTo(current + 1));
-      nav.querySelectorAll('.tnav-dot').forEach(btn => {
-        btn.addEventListener('click', () => goTo(+btn.dataset.i));
-      });
-    }
-
-    function goTo(index) {
-      current = (index + images.length) % images.length;
-      renderImage(current);
-      renderNav();
-    }
-
-    renderImage(current);
-    renderNav();
 
     // ── Hamburger menu
     const hamburger = document.getElementById('hamburger');
