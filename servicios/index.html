@@ -323,6 +323,16 @@
 
     .lightbox.open { opacity: 1; pointer-events: all; }
 
+    #videoLightboxFrame {
+      width: min(400px, 90vw);
+      aspect-ratio: 9 / 16;
+      max-height: 90vh;
+      border-radius: 12px;
+      border: 2.5px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      display: block;
+    }
+
     @keyframes carouselFade {
       from { opacity: 0; }
       to   { opacity: 1; }
@@ -449,6 +459,70 @@
       height: 100% !important;
     }
 
+    /* ── INSTA CARD (dronLeft) ── */
+    .insta-card-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 60%, rgba(0,0,0,0.45) 100%);
+    }
+
+    #dronLeft .insta-handle, #dronLeft .insta-caption,
+    #dronRight .insta-handle, #dronRight .insta-caption { color: var(--white); }
+
+    .insta-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .insta-card-inner img.insta-avatar {
+      position: static;
+      inset: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--black);
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
+      cursor: default;
+    }
+
+    .insta-handle {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      font-family: var(--font-body);
+    }
+
+    .insta-play-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insta-play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--turquesa);
+      border: 2.5px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insta-caption {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      font-family: var(--font-body);
+    }
+
     /* ── RESPONSIVE MÓVIL ── */
     @media (max-width: 768px) {
       .neocard-section { width: calc(100% - 24px); }
@@ -569,24 +643,56 @@
     </div>
     <div class="two-col-video">
       <div class="video-dual">
-        <div class="video-placeholder video-placeholder--vertical" id="dronLeft"></div>
-        <div class="video-placeholder video-placeholder--vertical" id="dronRight"></div>
+        <div class="video-placeholder video-placeholder--vertical" id="dronLeft" style="background-image:url('/instagram_thumb/dron_thumb_left_IMG_0940.jpg');background-size:cover;background-position:center;">
+          <div class="insta-card-inner">
+            <div class="insta-card-header">
+              <img src="/instagram_thumb/logo_corpany_instagram.png" alt="Corpany" class="insta-avatar" />
+              <span class="insta-handle">@companycorrupt</span>
+            </div>
+            <div class="insta-play-wrap">
+              <div class="insta-play-btn">
+                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
+                  <path d="M3 2l14 9-14 9V2z" fill="#1a1a1a"/>
+                </svg>
+              </div>
+            </div>
+            <span class="insta-caption">Turismo Maldivas</span>
+          </div>
+        </div>
+        <div class="video-placeholder video-placeholder--vertical" id="dronRight" style="background-image:url('/instagram_thumb/dron_thumb_right_IMG_0941.jpg');background-size:cover;background-position:center;">
+          <div class="insta-card-inner">
+            <div class="insta-card-header">
+              <img src="/instagram_thumb/logo_corpany_instagram.png" alt="Corpany" class="insta-avatar" />
+              <span class="insta-handle">@companycorrupt</span>
+            </div>
+            <div class="insta-play-wrap">
+              <div class="insta-play-btn" id="dronRightPlayBtn">
+                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
+                  <path d="M3 2l14 9-14 9V2z" fill="#1a1a1a"/>
+                </svg>
+              </div>
+            </div>
+            <span class="insta-caption">El dragón de la Calderona</span>
+          </div>
+        </div>
       </div>
-      <div class="video-nav" id="videoNav3"></div>
     </div>
   </div>
 
   <!-- SEPARADOR -->
   <hr style="border: none; border-top: 2px solid var(--black); margin: 29px 0 0;" />
 
-  <!-- REELS DRON (templates ocultos) -->
-  <template id="dron-v1"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DWiweBVDZXi/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14"></blockquote></template>
-  <template id="dron-v2"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DXElRoZCFU0/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14"></blockquote></template>
 
-  <!-- LIGHTBOX -->
+<!-- LIGHTBOX IMÁGENES -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose">×</button>
     <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <!-- LIGHTBOX VÍDEO -->
+  <div class="lightbox" id="videoLightbox">
+    <button class="lightbox-close" id="videoLightboxClose">×</button>
+    <iframe id="videoLightboxFrame" src="" allowfullscreen frameborder="0" scrolling="no"></iframe>
   </div>
 
   <script>
@@ -701,68 +807,11 @@
       renderNav();
     })();
 
-    // ── Carrusel 3: Grabación con dron — añade templates "dron-vN" para más reels
-    (function() {
-      const embeds = [
-        document.getElementById('dron-v1')?.innerHTML,
-        document.getElementById('dron-v2')?.innerHTML,
-      ].filter(Boolean);
-
-      let current = 0;
-      const leftSlot  = document.getElementById('dronLeft');
-      const rightSlot = document.getElementById('dronRight');
-      const nav       = document.getElementById('videoNav3');
-
-      function processEmbeds() {
-        if (window.instgrm) window.instgrm.Embeds.process();
-      }
-
-      function renderVideos(index) {
-        leftSlot.innerHTML  = embeds[index]     || '';
-        rightSlot.innerHTML = embeds[index + 1] || '';
-        processEmbeds();
-      }
-
-      function getPageItems() {
-        const n = embeds.length;
-        if (n <= 5) return Array.from({ length: n }, (_, i) => i);
-        if (current <= 2) return [0, 1, 2, '...', n - 1];
-        if (current >= n - 3) return [0, '...', n - 3, n - 2, n - 1];
-        return [0, '...', current, '...', n - 1];
-      }
-
-      function renderNav() {
-        if (embeds.length <= 1) { nav.innerHTML = ''; return; }
-        const items = getPageItems();
-        const dots = items.map(item =>
-          item === '...'
-            ? `<span class="tnav-ellipsis">…</span>`
-            : `<button class="tnav-dot${item === current ? ' active' : ''}" data-i="${item}">${item + 1}</button>`
-        ).join('');
-        nav.innerHTML = `<button class="tnav-btn" id="vPrev3">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="vNext3">&#8250;</button>`;
-        document.getElementById('vPrev3').addEventListener('click', () => goTo(current - 1));
-        document.getElementById('vNext3').addEventListener('click', () => goTo(current + 1));
-        nav.querySelectorAll('.tnav-dot').forEach(btn => {
-          btn.addEventListener('click', () => goTo(+btn.dataset.i));
-        });
-      }
-
-      function goTo(index) {
-        current = (index + embeds.length) % embeds.length;
-        renderVideos(current);
-        renderNav();
-      }
-
-      renderVideos(current);
-      renderNav();
-    })();
-
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
 
     document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     function openLightbox(src) {
       lightboxImg.src = src;
@@ -773,6 +822,34 @@
       lightbox.classList.remove('open');
       lightbox.addEventListener('transitionend', () => { lightboxImg.src = ''; }, { once: true });
     }
+
+    const videoLightbox = document.getElementById('videoLightbox');
+    const videoLightboxFrame = document.getElementById('videoLightboxFrame');
+
+    document.getElementById('videoLightboxClose').addEventListener('click', closeVideoLightbox);
+    videoLightbox.addEventListener('click', e => { if (e.target === videoLightbox) closeVideoLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeLightbox(); closeVideoLightbox(); }
+    });
+
+    function openVideoLightbox(src) {
+      videoLightboxFrame.src = src;
+      videoLightbox.classList.add('open');
+    }
+
+    function closeVideoLightbox() {
+      videoLightbox.classList.remove('open');
+      videoLightbox.addEventListener('transitionend', () => { videoLightboxFrame.src = ''; }, { once: true });
+    }
+
+    document.querySelector('#dronLeft .insta-play-btn').addEventListener('click', () => {
+      openVideoLightbox('https://www.instagram.com/reel/DXElRoZCFU0/embed/');
+    });
+
+    document.querySelector('#dronRight .insta-play-btn').addEventListener('click', () => {
+      openVideoLightbox('https://www.instagram.com/reel/DWiweBVDZXi/embed/');
+    });
 
     // ── Hamburger menu
     const hamburger = document.getElementById('hamburger');
