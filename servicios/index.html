@@ -692,7 +692,7 @@
   <!-- LIGHTBOX VÍDEO -->
   <div class="lightbox" id="videoLightbox">
     <button class="lightbox-close" id="videoLightboxClose">×</button>
-    <iframe id="videoLightboxFrame" src="" allowfullscreen frameborder="0" scrolling="no"></iframe>
+    <iframe id="videoLightboxFrame" src="" allow="autoplay; fullscreen" allowfullscreen frameborder="0" scrolling="no"></iframe>
   </div>
 
   <script>
@@ -836,19 +836,31 @@
     function openVideoLightbox(src) {
       videoLightboxFrame.src = src;
       videoLightbox.classList.add('open');
+      videoLightbox.requestFullscreen?.().catch(() => {});
     }
 
     function closeVideoLightbox() {
       videoLightbox.classList.remove('open');
       videoLightbox.addEventListener('transitionend', () => { videoLightboxFrame.src = ''; }, { once: true });
+      if (document.fullscreenElement === videoLightbox) {
+        document.exitFullscreen().catch(() => {});
+      }
     }
 
+    // Sync cuando el usuario sale del fullscreen con Escape o el botón del navegador
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && videoLightbox.classList.contains('open')) {
+        videoLightbox.classList.remove('open');
+        videoLightbox.addEventListener('transitionend', () => { videoLightboxFrame.src = ''; }, { once: true });
+      }
+    });
+
     document.querySelector('#dronLeft .insta-play-btn').addEventListener('click', () => {
-      openVideoLightbox('https://www.instagram.com/reel/DXElRoZCFU0/embed/');
+      openVideoLightbox('https://www.instagram.com/reel/DXElRoZCFU0/embed/?autoplay=1');
     });
 
     document.querySelector('#dronRight .insta-play-btn').addEventListener('click', () => {
-      openVideoLightbox('https://www.instagram.com/reel/DWiweBVDZXi/embed/');
+      openVideoLightbox('https://www.instagram.com/reel/DWiweBVDZXi/embed/?autoplay=1');
     });
 
     // ── Hamburger menu
