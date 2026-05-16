@@ -558,6 +558,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+    }
+
+    .diferente-character {
+      position: absolute;
+      width: 544px;
+      max-width: 90%;
+      z-index: 2;
+      left: 50%;
+      transform: translateX(-60%);
+      bottom: 0;
+      pointer-events: none;
     }
 
     .hero-grid {
@@ -1736,7 +1748,9 @@
 
 
       /* Diferente */
-      #diferente { grid-template-columns: 1fr; }
+      #diferente { grid-template-columns: 1fr; overflow: hidden; }
+      #diferente .hero-visual { min-height: 480px; }
+      #diferente .hero-grid { width: 252px; height: 252px; }
       .diferente-visual { display: flex; padding: 0 20px 48px; }
       .blocks-composition { width: 160px; height: 220px; }
       .block-a { width: 66px; height: 66px; }
@@ -2026,6 +2040,7 @@
   <!-- DIFERENTE LETRA -->
   <section id="diferente" data-screen-label="02 Diferente Letra">
     <div class="hero-visual fade-in">
+      <img src="Personaje/character_play_music.png" alt="" class="diferente-character">
       <div class="hero-grid" id="heroGrid">
         <div class="hero-grid-cell yellow"></div>
         <div class="hero-grid-cell dark"></div>
@@ -2047,10 +2062,8 @@
         <p>Y eso suena precioso hasta que recuerdas que también amplifica el caos, la indecisión y esas ideas que parecían brillantes a las 2:00 AM. Si eran buenas, las lleva más lejos. Si eran flojas, empieza el festival de las dudas eternas.</p>
         <p>Y aquí es donde entro en juego: tu incertidumbre es mi desafío. Investigo, pregunto y cuestiono cada punto hasta disipar la niebla porque <strong>no puedo crear algo que impacte de verdad sin entender primero qué hay detrás.</strong></p>
         <ul class="check-list">
-          <li class="check-no">No soy una IA que genera un contenido en serie y te manda presupuesto sin escucharte</li>
           <li class="check-yes">Trabajo por vocación. Tu ganancia es la mía. Así de simple</li>
         </ul>
-        <p>Mi objetivo es <strong>ser una extensión de tu negocio, una pieza de ayuda externa a la que acudir cuando el oráculo no responde</strong></p>
       </div>
       <a href="#decisiones" class="btn-primary">Vamos a escuchar esa canción</a>
     </div>
