@@ -578,6 +578,12 @@
     .hero-grid-cell.dark { background: var(--black); }
 
     /* ── Separador entre secciones ── */
+    section, footer {
+      max-width: 1500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     section + section, footer {
       border-top: 1px solid var(--light-gray);
     }
@@ -1722,12 +1728,12 @@
 
       /* Hero */
       #hero { padding-top: 80px; display: flex; flex-direction: column; align-items: stretch; }
-      #hero .diferente-visual { padding: 0; order: -1; height: 160px; }
-      #ascii-trail { height: 160px; min-height: unset; }
+      #hero .diferente-visual { padding: 0; order: -1; height: auto; }
+      #ascii-trail { height: 100%; min-height: unset; }
       .hero-content { padding: 16px 20px 52px; }
       .hero-visual { display: flex; padding: 0 20px 48px; }
       .hero-grid { width: 180px; height: 180px; }
-      .diferente-visual img { width: 304px; }
+
 
       /* Diferente */
       #diferente { grid-template-columns: 1fr; }
@@ -1787,11 +1793,27 @@
       padding: 0;
       overflow: hidden;
       align-self: stretch;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     #ascii-trail {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+    }
+    .hero-character-gif {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 460px;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero-character-gif { width: 88%; max-width: 380px; }
     }
 
     /* ── COOKIE MODAL ── */
@@ -1924,6 +1946,7 @@
     </div>
     <div class="diferente-visual">
       <canvas id="ascii-trail"></canvas>
+      <img src="Gift/character_design-glitch.gif" alt="" class="hero-character-gif fade-in fade-in-delay-2">
     </div>
   </section>
 
