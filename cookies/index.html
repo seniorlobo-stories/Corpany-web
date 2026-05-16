@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aviso legal — Corpany</title>
+  <title>Política de cookies — Corpany</title>
   <style>
     @font-face {
       font-family: 'Space Grotesk';
@@ -17,7 +17,6 @@
 
     :root {
       --turquesa: #00d2c5;
-      --naranja: #ffc272;
       --carne: #ffe3b3;
       --azulmarino: #263c47;
       --black: #1a1a1a;
@@ -106,7 +105,6 @@
     }
 
     .nav-links .nav-cta:hover {
-      background: var(--turquesa);
       box-shadow: 1px 1px 0 var(--black);
       transform: translate(2px, 2px);
     }
@@ -120,7 +118,7 @@
       padding: 140px 24px 80px;
     }
 
-    .aviso-titulo {
+    .page-titulo {
       font-size: clamp(32px, 5vw, 52px);
       font-weight: 700;
       line-height: 1.1;
@@ -128,18 +126,18 @@
       letter-spacing: -0.02em;
     }
 
-    .aviso-intro {
+    .page-intro {
       font-size: 16px;
       line-height: 1.7;
       color: #333;
       margin-bottom: 16px;
     }
 
-    .aviso-section {
+    .page-section {
       margin-top: 48px;
     }
 
-    .aviso-section h2 {
+    .page-section h2 {
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 16px;
@@ -147,14 +145,16 @@
       padding-left: 12px;
     }
 
-    .aviso-section p {
+    .page-section p {
       font-size: 15px;
       line-height: 1.75;
       color: #333;
       margin-bottom: 12px;
     }
 
-    .aviso-datos {
+    .page-section a { color: var(--black); }
+
+    .page-datos {
       background: #f5f5f3;
       border: 2px solid var(--black);
       border-radius: 12px;
@@ -164,9 +164,7 @@
       line-height: 1.8;
     }
 
-    .aviso-datos strong { font-weight: 600; }
-    .aviso-datos a { color: var(--black); }
-    .aviso-section a { color: var(--black); }
+    .page-datos strong { font-weight: 600; }
 
     /* ── FOOTER ── */
     footer {
@@ -183,19 +181,10 @@
       margin-bottom: 20px;
     }
 
-    .footer-social {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
+    .footer-social { display: flex; gap: 20px; align-items: center; }
     .footer-social a { text-decoration: none; }
 
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
+    .footer-links { display: flex; gap: 24px; align-items: center; }
 
     .footer-links a {
       font-size: 12px;
@@ -207,24 +196,11 @@
 
     .footer-links a:hover { color: var(--white); }
 
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
 
-    .footer-logo {
-      height: 82px;
-      width: auto;
-      display: block;
-      filter: invert(1);
-    }
+    .footer-logo { height: 82px; width: auto; display: block; filter: invert(1); }
 
-    .footer-copy {
-      font-size: 11px;
-      color: var(--gray);
-      letter-spacing: 0.06em;
-    }
+    .footer-copy { font-size: 11px; color: var(--gray); letter-spacing: 0.06em; }
 
     .social-btn {
       display: flex;
@@ -241,21 +217,12 @@
       transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
 
-    .social-btn:hover {
-      box-shadow: 1px 1px 0 var(--black);
-      transform: translate(2px, 2px);
-    }
-
+    .social-btn:hover { box-shadow: 1px 1px 0 var(--black); transform: translate(2px, 2px); }
     .social-btn svg { width: 22px; height: 22px; }
 
     /* ── MÓVIL ── */
     @media (max-width: 768px) {
-      nav {
-        top: 10px;
-        width: calc(100% - 24px);
-        padding: 0 12px 0 8px;
-        height: 52px;
-      }
+      nav { top: 10px; width: calc(100% - 24px); padding: 0 12px 0 8px; height: 52px; }
 
       .nav-links { display: none; }
 
@@ -277,14 +244,7 @@
 
       .nav-links.open li { width: 100%; }
       .nav-links.open li:last-child { position: static; }
-
-      .nav-links.open a {
-        font-size: 14px;
-        display: block;
-        padding: 10px 14px;
-        border-radius: 8px;
-      }
-
+      .nav-links.open a { font-size: 14px; display: block; padding: 10px 14px; border-radius: 8px; }
       .nav-links.open .nav-cta { text-align: center; margin-top: 4px; }
 
       .nav-hamburger {
@@ -336,66 +296,74 @@
   </nav>
 
   <main>
-    <h1 class="aviso-titulo">Aviso legal</h1>
+    <h1 class="page-titulo">Política de cookies</h1>
 
-    <div class="aviso-section">
-      <h2>1. Datos identificativos</h2>
-      <p>En cumplimiento de lo dispuesto en la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico, se informa de que el sitio web <a href="https://corpany.es/">https://corpany.es/</a> es titularidad de:</p>
-      <div class="aviso-datos">
-        <strong>Titular:</strong> Beatriz Turumbay<br />
-        <strong>Nombre comercial:</strong> CORPANY<br />
-        <strong>NIF/CIF:</strong> 728****5R<br />
-        <strong>Domicilio:</strong> Valencia, España<br />
-        <strong>Correo electrónico:</strong> info@corpany.es<br />
-        <strong>Sitio web:</strong> <a href="https://corpany.es/">https://corpany.es/</a>
+    <div class="page-section">
+      <h2>1. ¿Qué son las cookies?</h2>
+      <p>Las cookies son pequeños archivos que se descargan en el dispositivo de la persona usuaria al acceder a determinadas páginas web. Permiten, entre otras funciones, que una página web funcione correctamente, recuerde determinadas preferencias o recoja información sobre la navegación, según el tipo de cookie utilizada.</p>
+      <p>También pueden utilizarse tecnologías similares, como píxeles, identificadores locales, almacenamiento del navegador u otros sistemas equivalentes.</p>
+    </div>
+
+    <div class="page-section">
+      <h2>2. Uso de cookies en este sitio web</h2>
+      <p>El sitio web <a href="https://corpany.es/">https://corpany.es/</a> no utiliza herramientas propias de analítica, publicidad comportamental, remarketing ni elaboración de perfiles.</p>
+      <p>No obstante, este sitio web puede incluir contenidos incrustados de terceros, especialmente vídeos de Vimeo y publicaciones o contenidos de Instagram. Al visualizar o interactuar con estos contenidos, dichos terceros pueden instalar cookies o utilizar tecnologías similares conforme a sus propias políticas.</p>
+    </div>
+
+    <div class="page-section">
+      <h2>3. Tipos de cookies que pueden utilizarse</h2>
+      <p>Este sitio web puede utilizar las siguientes categorías de cookies:</p>
+      <div class="page-datos">
+        <strong>Cookies técnicas o necesarias</strong><br /><br />
+        <p>Son aquellas necesarias para permitir la navegación por el sitio web, garantizar su seguridad y habilitar sus funciones básicas.</p>
+        <p>Estas cookies no requieren consentimiento previo cuando son estrictamente necesarias para el funcionamiento del sitio.</p>
+      </div>
+      <div class="page-datos" style="margin-top: 16px;">
+        <strong>Cookies de terceros asociadas a contenidos incrustados</strong><br /><br />
+        <p>Son cookies o tecnologías similares que pueden ser utilizadas por plataformas externas cuando se muestran o reproducen contenidos incrustados en la web, como vídeos de Vimeo o publicaciones de Instagram.</p>
+        <p>Estas cookies pueden tener finalidades técnicas, de reproducción de contenido, medición, personalización, seguridad o, en su caso, finalidades vinculadas a la actividad propia de dichas plataformas.</p>
+        <p style="margin-bottom:0">CORPANY no controla directamente estas cookies, ya que son gestionadas por los respectivos terceros.</p>
       </div>
     </div>
 
-    <div class="aviso-section">
-      <h2>2. Objeto del sitio web</h2>
-      <p>El presente sitio web tiene como finalidad ofrecer información sobre los servicios profesionales prestados por CORPANY, relacionados con comunicación, diseño, contenido audiovisual, diseño web, edición de vídeo y grabación con dron, así como facilitar el contacto con personas, empresas o entidades interesadas en dichos servicios.</p>
+    <div class="page-section">
+      <h2>4. Servicios de terceros utilizados</h2>
+      <div class="page-datos">
+        <strong>Vimeo</strong><br /><br />
+        <p>Este sitio web puede incluir vídeos alojados en Vimeo mediante reproductores incrustados.</p>
+        <p>Vimeo puede utilizar cookies o tecnologías similares asociadas a la reproducción de vídeo, seguridad, preferencias o funcionamiento de su reproductor. En algunos casos, el reproductor de Vimeo permite configuraciones orientadas a reducir el uso de cookies, como el parámetro de privacidad o no seguimiento, cuando esté disponible.</p>
+        <p style="margin-bottom:0">Puedes consultar más información en la política de cookies y privacidad de Vimeo.</p>
+      </div>
+      <div class="page-datos" style="margin-top: 16px;">
+        <strong>Instagram</strong><br /><br />
+        <p>Este sitio web puede incluir contenidos incrustados procedentes de Instagram.</p>
+        <p>Al visualizar o interactuar con dichos contenidos, Instagram o Meta pueden recoger información técnica y utilizar cookies u otras tecnologías similares de acuerdo con sus propias políticas.</p>
+        <p style="margin-bottom:0">Puedes consultar más información en la política de cookies y privacidad de Meta/Instagram.</p>
+      </div>
     </div>
 
-    <div class="aviso-section">
-      <h2>3. Condiciones de uso</h2>
-      <p>El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación de este Aviso legal.</p>
-      <p>La persona usuaria se compromete a utilizar el sitio web de forma lícita, diligente y respetuosa con la normativa vigente, la buena fe, el orden público y los derechos de terceros.</p>
-      <p>Queda prohibido utilizar el sitio web con fines ilícitos, lesivos o que puedan dañar, inutilizar, sobrecargar o impedir el normal funcionamiento del sitio.</p>
+    <div class="page-section">
+      <h2>5. Gestión del consentimiento</h2>
+      <p>Cuando sea necesario, la persona usuaria podrá aceptar, rechazar o configurar el uso de cookies no necesarias mediante el sistema de consentimiento disponible en la web.</p>
+      <p>En el caso de contenidos incrustados de terceros, la web podrá solicitar consentimiento antes de cargar dichos contenidos. Si la persona usuaria no presta su consentimiento, es posible que algunos vídeos, publicaciones o elementos externos no se muestren correctamente.</p>
     </div>
 
-    <div class="aviso-section">
-      <h2>4. Propiedad intelectual e industrial</h2>
-      <p>Todos los contenidos de este sitio web, incluyendo textos, imágenes, fotografías, vídeos, diseños, logotipos, elementos gráficos y demás materiales, son titularidad de CORPANY o de terceros que han autorizado su uso, salvo que se indique expresamente lo contrario.</p>
-      <p>Queda prohibida la reproducción, distribución, comunicación pública, transformación o cualquier otra forma de explotación de dichos contenidos sin autorización previa y por escrito de su titular.</p>
+    <div class="page-section">
+      <h2>6. Cómo configurar o eliminar cookies</h2>
+      <p>La persona usuaria puede permitir, bloquear o eliminar las cookies instaladas en su dispositivo mediante la configuración del navegador utilizado.</p>
+      <p>La configuración concreta puede variar según el navegador, la versión y el dispositivo.</p>
     </div>
 
-    <div class="aviso-section">
-      <h2>5. Responsabilidad</h2>
-      <p>CORPANY procura que la información publicada en este sitio web sea correcta, actualizada y útil. No obstante, no garantiza la inexistencia de errores, omisiones o desactualizaciones puntuales.</p>
-      <p>CORPANY no se responsabiliza de los daños o perjuicios derivados del uso indebido del sitio web, de la imposibilidad de acceso, de interrupciones del servicio, de fallos técnicos o de elementos ajenos a su control razonable.</p>
-      <p>La información publicada en este sitio web tiene carácter informativo y no implica, por sí misma, la existencia de una relación contractual o profesional entre la persona usuaria y CORPANY.</p>
+    <div class="page-section">
+      <h2>7. Responsabilidad sobre cookies de terceros</h2>
+      <p>CORPANY no es responsable del uso de cookies realizado por terceros fuera de este sitio web. Las plataformas externas, como Vimeo o Instagram, son responsables de sus propias tecnologías, políticas y tratamientos de datos.</p>
+      <p>Se recomienda revisar las políticas de privacidad y cookies de dichos servicios antes de interactuar con sus contenidos.</p>
     </div>
 
-    <div class="aviso-section">
-      <h2>6. Enlaces externos</h2>
-      <p>Este sitio web puede incluir enlaces a páginas externas, redes sociales o plataformas de terceros.</p>
-      <p>CORPANY no se responsabiliza del contenido, funcionamiento, condiciones legales, políticas de privacidad o prácticas de dichos sitios externos. El acceso a páginas de terceros se realiza bajo la exclusiva responsabilidad de la persona usuaria.</p>
-    </div>
-
-    <div class="aviso-section">
-      <h2>7. Protección de datos</h2>
-      <p>El tratamiento de los datos personales que puedan facilitarse a través del sitio web o de los canales de contacto disponibles se regirá por lo establecido en la <a href="/privacidad">Política de privacidad</a>.</p>
-    </div>
-
-    <div class="aviso-section">
-      <h2>8. Cookies</h2>
-      <p>Este sitio web puede utilizar cookies propias o de terceros. La información relativa a su uso, configuración o rechazo se encuentra disponible en la Política de cookies.</p>
-    </div>
-
-    <div class="aviso-section">
-      <h2>9. Legislación aplicable</h2>
-      <p>El presente Aviso legal se rige por la legislación española.</p>
-      <p>Para cualquier controversia relacionada con el acceso o uso del sitio web, las partes se someterán a los juzgados y tribunales que resulten competentes conforme a la normativa aplicable.</p>
+    <div class="page-section">
+      <h2>8. Cambios en esta política de cookies</h2>
+      <p>CORPANY podrá actualizar esta Política de cookies cuando sea necesario por cambios técnicos, incorporación o retirada de servicios de terceros, modificaciones normativas o cambios en los criterios de las autoridades competentes.</p>
+      <p>La versión vigente será la publicada en esta página en cada momento.</p>
       <p><strong>Última actualización:</strong> 16/05/2026</p>
     </div>
   </main>
