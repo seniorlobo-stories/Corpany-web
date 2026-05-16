@@ -276,6 +276,85 @@
       .footer-links { flex-wrap: wrap; gap: 12px; }
       .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
     }
+
+    .cookie-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 32px;
+      pointer-events: none;
+    }
+
+    .cookie-modal {
+      background: var(--white);
+      border: 2.5px solid var(--black);
+      border-radius: 12px;
+      box-shadow: 5px 5px 0 var(--black);
+      padding: 32px 28px 24px;
+      max-width: 480px;
+      width: 100%;
+      pointer-events: all;
+    }
+
+    .cookie-modal.hidden { display: none; }
+
+    .cookie-text {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+
+    .cookie-text em { font-style: italic; }
+
+    .cookie-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .cookie-reject {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      letter-spacing: 0.01em;
+    }
+
+    .cookie-reject strong { font-weight: 900; margin-right: 1px; }
+    .cookie-reject:hover { opacity: 0.6; }
+
+    .cookie-accept {
+      background: var(--turquesa);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0 var(--black);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+
+    .cookie-accept:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(2px, 2px); }
+    .cookie-accept:active { box-shadow: 0px 0px 0 var(--black); transform: translate(4px, 4px); }
   </style>
 </head>
 <body>
@@ -385,6 +464,7 @@
         </a>
       </div>
       <div class="footer-links">
+        <a href="#" id="cookieSettingsLink">Ajustes cookies</a>
         <a href="/privacidad">Privacidad</a>
         <a href="/cookies">Cookies</a>
         <a href="/aviso-legal">Aviso legal</a>
@@ -402,7 +482,45 @@
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('cookieModal');
+      if (!modal) return;
+
+      if (localStorage.getItem('cookies_choice')) {
+        modal.classList.add('hidden');
+      }
+
+      document.getElementById('cookieAccept').addEventListener('click', function() {
+        localStorage.setItem('cookies_choice', 'accepted');
+        modal.classList.add('hidden');
+      });
+      document.getElementById('cookieReject').addEventListener('click', function() {
+        localStorage.setItem('cookies_choice', 'rejected');
+        modal.classList.add('hidden');
+      });
+
+      var settingsLink = document.getElementById('cookieSettingsLink');
+      if (settingsLink) {
+        settingsLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          modal.classList.remove('hidden');
+        });
+      }
+    });
   </script>
+
+  <div class="cookie-overlay" id="cookieOverlay">
+    <div class="cookie-modal" id="cookieModal">
+      <p class="cookie-text">
+        <em>El monstruo de las galletas: las uso para saber qué parte de mi web interesa más y cuál debo de reciclar en el contenedor verde. No vendo tus datos a la CIA ni me dedico a perseguirte cuando te vas, no dramas. Pero si quieres pasearte en modo incógnito (te entiendo) dale a la X en la casilla de salida.</em>
+      </p>
+      <div class="cookie-actions">
+        <button class="cookie-reject" id="cookieReject"><strong>X</strong>Rechazar</button>
+        <button class="cookie-accept" id="cookieAccept">Aceptar cookies</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
