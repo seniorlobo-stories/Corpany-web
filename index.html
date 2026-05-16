@@ -1804,16 +1804,85 @@
       width: 100%;
       height: 100%;
     }
-    .hero-character-gif {
+    .hero-character-wrap {
       position: relative;
       z-index: 2;
       width: 90%;
       max-width: 460px;
       pointer-events: none;
+      display: grid;
     }
 
+    .hero-character-wrap img {
+      width: 100%;
+      height: auto;
+      grid-area: 1 / 1;
+    }
+
+    /* Cycle 12s | glitch: 4 frames × 1% cada uno = 0.48s por transición */
+    /* Salida: 26-29% | Entrada: 30-33%  /  59-62% | 63-66%  /  92-95% | 96-100% */
+
+    @keyframes gif-design-anim {
+      0%, 25%  { opacity: 1; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch out */
+      26%      { opacity: 1; transform: translateX(-7px); clip-path: inset(18% 0 52% 0); }
+      27%      { opacity: 0; transform: translateX( 5px); clip-path: inset(0 0 0 0);    }
+      28%      { opacity: 1; transform: translateX( 0px); clip-path: inset(62% 0 8% 0);  }
+      29%      { opacity: 0; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      /* hidden */
+      30%, 95% { opacity: 0; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch in */
+      96%      { opacity: 1; transform: translateX( 6px); clip-path: inset(42% 0 28% 0); }
+      97%      { opacity: 0; transform: translateX(-5px); clip-path: inset(0 0 0 0);    }
+      98%      { opacity: 1; transform: translateX( 0px); clip-path: inset(14% 0 58% 0); }
+      99%      { opacity: 0; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      100%     { opacity: 1; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+    }
+
+    @keyframes gif-drone-anim {
+      /* hidden */
+      0%, 29%  { opacity: 0; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch in */
+      30%      { opacity: 1; transform: translateX( 6px); clip-path: inset(42% 0 28% 0); }
+      31%      { opacity: 0; transform: translateX(-5px); clip-path: inset(0 0 0 0);    }
+      32%      { opacity: 1; transform: translateX( 0px); clip-path: inset(14% 0 58% 0); }
+      33%      { opacity: 1; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      /* visible */
+      34%, 58% { opacity: 1; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch out */
+      59%      { opacity: 1; transform: translateX(-7px); clip-path: inset(18% 0 52% 0); }
+      60%      { opacity: 0; transform: translateX( 5px); clip-path: inset(0 0 0 0);    }
+      61%      { opacity: 1; transform: translateX( 0px); clip-path: inset(62% 0 8% 0);  }
+      62%      { opacity: 0; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      /* hidden */
+      63%, 100% { opacity: 0; transform: translateX(0);   clip-path: inset(0 0 0 0); }
+    }
+
+    @keyframes gif-micro-anim {
+      /* hidden */
+      0%, 62%  { opacity: 0; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch in */
+      63%      { opacity: 1; transform: translateX( 6px); clip-path: inset(42% 0 28% 0); }
+      64%      { opacity: 0; transform: translateX(-5px); clip-path: inset(0 0 0 0);    }
+      65%      { opacity: 1; transform: translateX( 0px); clip-path: inset(14% 0 58% 0); }
+      66%      { opacity: 1; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      /* visible */
+      67%, 91% { opacity: 1; transform: translateX(0);    clip-path: inset(0 0 0 0); }
+      /* glitch out */
+      92%      { opacity: 1; transform: translateX(-7px); clip-path: inset(18% 0 52% 0); }
+      93%      { opacity: 0; transform: translateX( 5px); clip-path: inset(0 0 0 0);    }
+      94%      { opacity: 1; transform: translateX( 0px); clip-path: inset(62% 0 8% 0);  }
+      95%      { opacity: 0; transform: translateX( 0px); clip-path: inset(0 0 0 0);    }
+      /* hidden */
+      96%, 100% { opacity: 0; transform: translateX(0);   clip-path: inset(0 0 0 0); }
+    }
+
+    .gif-design { animation: gif-design-anim 12s infinite; }
+    .gif-drone  { animation: gif-drone-anim  12s infinite; }
+    .gif-micro  { animation: gif-micro-anim  12s infinite; }
+
     @media (max-width: 768px) {
-      .hero-character-gif { width: 88%; max-width: 380px; }
+      .hero-character-wrap { width: 88%; max-width: 380px; }
     }
 
     /* ── COOKIE MODAL ── */
@@ -1946,7 +2015,11 @@
     </div>
     <div class="diferente-visual">
       <canvas id="ascii-trail"></canvas>
-      <img src="Gift/character_design-glitch.gif" alt="" class="hero-character-gif fade-in fade-in-delay-2">
+      <div class="hero-character-wrap fade-in fade-in-delay-2">
+        <img src="Gift/character_design-glitch.gif" alt="" class="gif-design">
+        <img src="Gift/character_drone-glitch.gif" alt="" class="gif-drone">
+        <img src="Gift/character_microphone-glitch.gif" alt="" class="gif-micro">
+      </div>
     </div>
   </section>
 
