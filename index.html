@@ -2003,34 +2003,47 @@
 
     .dm-tabs {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 1.25rem;
       flex-wrap: wrap;
     }
 
     .dm-tab {
-      padding: 7px 20px;
-      border-radius: 999px;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 8px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       cursor: pointer;
-      border: 1px solid rgba(0, 210, 197, 0.3);
-      background: transparent;
-      color: rgba(26, 26, 26, 0.45);
-      transition: all 0.2s ease;
-      letter-spacing: 0.02em;
-      font-family: inherit;
+      font-family: var(--font-body);
+      border: 2px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
 
     .dm-tab.active {
-      background: rgba(0, 210, 197, 0.1);
-      color: var(--turquesa);
-      border-color: var(--turquesa);
+      background: var(--turquesa);
+      color: var(--black);
+      box-shadow: 4px 4px 0 var(--black);
     }
 
     .dm-tab:hover:not(.active) {
-      color: rgba(26, 26, 26, 0.8);
-      border-color: rgba(0, 210, 197, 0.5);
+      box-shadow: 2px 2px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .dm-tab.active:hover {
+      box-shadow: 2px 2px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .dm-tab:active {
+      box-shadow: 0px 0px 0 var(--black);
+      transform: translate(4px, 4px);
     }
 
     .dm-cards {
@@ -2129,7 +2142,7 @@
     }
 
     @media (max-width: 600px) {
-      .dm-tab { padding: 6px 14px; font-size: 12px; }
+      .dm-tab { padding: 8px 14px; font-size: 11px; }
       .dm-card { padding: 10px 12px; }
       .dm-cards { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     }
