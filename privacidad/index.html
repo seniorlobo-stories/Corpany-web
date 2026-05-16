@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacidad — Corpany</title>
+  <style>
+    @font-face {
+      font-family: 'Space Grotesk';
+      src: url('/space-grotesk/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+      font-weight: 300 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --turquesa: #00d2c5;
+      --naranja: #ffc272;
+      --carne: #ffe3b3;
+      --azulmarino: #263c47;
+      --black: #1a1a1a;
+      --white: #ffffff;
+      --gray: #888;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 0 8px;
+      height: 56px;
+      width: calc(100% - 48px);
+      max-width: 1200px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 14px;
+      box-shadow: 4px 4px 0 var(--black);
+      gap: 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-gif {
+      height: 85px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .nav-links a:hover { background: var(--carne); }
+
+    .nav-links li:last-child { position: absolute; right: 16px; }
+
+    .nav-links .nav-cta {
+      background: var(--turquesa);
+      color: var(--black);
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .nav-links .nav-cta:hover {
+      background: var(--turquesa);
+      box-shadow: 1px 1px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .nav-hamburger { display: none; }
+
+    /* ── CONTENIDO ── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+
+    .privacidad-titulo {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+
+    .privacidad-intro {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .privacidad-section {
+      margin-top: 48px;
+    }
+
+    .privacidad-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--turquesa);
+      padding-left: 12px;
+    }
+
+    .privacidad-section p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .privacidad-datos {
+      background: #f5f5f3;
+      border: 2px solid var(--black);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .privacidad-datos strong {
+      font-weight: 600;
+    }
+
+    .privacidad-datos a {
+      color: var(--black);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--azulmarino);
+      padding: 40px 60px 24px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #2a2a28;
+      margin-bottom: 20px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-social a { text-decoration: none; }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      height: 82px;
+      width: auto;
+      display: block;
+      filter: invert(1);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: var(--turquesa);
+      border: 2px solid var(--black);
+      border-radius: 50%;
+      box-shadow: 3px 3px 0 var(--black);
+      color: var(--black);
+      text-decoration: none;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .social-btn:hover {
+      box-shadow: 1px 1px 0 var(--black);
+      transform: translate(2px, 2px);
+    }
+
+    .social-btn svg { width: 22px; height: 22px; }
+
+    /* ── MÓVIL ── */
+    @media (max-width: 768px) {
+      nav {
+        top: 10px;
+        width: calc(100% - 24px);
+        padding: 0 12px 0 8px;
+        height: 52px;
+      }
+
+      .nav-links { display: none; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 74px;
+        left: 12px;
+        right: 12px;
+        background: var(--white);
+        border: 2px solid var(--black);
+        border-radius: 14px;
+        box-shadow: 4px 4px 0 var(--black);
+        padding: 16px;
+        gap: 4px;
+        z-index: 99;
+      }
+
+      .nav-links.open li { width: 100%; }
+      .nav-links.open li:last-child { position: static; }
+
+      .nav-links.open a {
+        font-size: 14px;
+        display: block;
+        padding: 10px 14px;
+        border-radius: 8px;
+      }
+
+      .nav-links.open .nav-cta { text-align: center; margin-top: 4px; }
+
+      .nav-hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        background: none;
+        border: none;
+      }
+
+      .nav-hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--black);
+        transition: transform 0.2s, opacity 0.2s;
+      }
+
+      .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+      .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+      .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+      main { padding: 100px 20px 60px; }
+
+      footer { padding: 32px 20px 20px; }
+      .footer-top { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 12px; }
+      .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="nav-logo-gif" />
+    </a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/servicios">Servicios</a></li>
+      <li><a href="/#donde">Sobre mí</a></li>
+      <li><a href="/#letsdance" class="nav-cta">Hablemos</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1 class="privacidad-titulo">Política de privacidad</h1>
+
+    <p class="privacidad-intro">En esta política de privacidad te explico cómo trato los datos personales que puedas facilitar a través de esta web o al contactar conmigo por correo electrónico, redes sociales u otros canales vinculados a CORPANY.</p>
+
+    <p class="privacidad-intro">Esta política se ha redactado conforme al Reglamento General de Protección de Datos, RGPD, y a la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los derechos digitales. La AEPD recuerda que las personas usuarias tienen derecho a acceder, rectificar, suprimir, oponerse, limitar el tratamiento, solicitar la portabilidad de sus datos y no ser objeto de decisiones automatizadas cuando corresponda.</p>
+
+    <div class="privacidad-section">
+      <h2>1. Responsable del tratamiento</h2>
+      <p>La responsable del tratamiento de tus datos es:</p>
+      <div class="privacidad-datos">
+        <strong>Responsable:</strong> Beatriz Turumbay<br />
+        <strong>Nombre comercial:</strong> CORPANY<br />
+        <strong>NIF/CIF:</strong> 728****5R<br />
+        <strong>Domicilio:</strong> Valencia (España)<br />
+        <strong>Correo electrónico:</strong> info@corpany.es<br />
+        <strong>Sitio web:</strong> <a href="https://corpany.es/">https://corpany.es/</a>
+      </div>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>2. Qué datos puedo tratar</h2>
+      <p>Puedo tratar los datos que me facilites cuando contactas conmigo, solicitas información o contratas algún servicio. Normalmente serán datos básicos como:</p>
+      <p>Nombre y apellidos, empresa o proyecto, correo electrónico, teléfono, información que incluyas en tu mensaje, datos necesarios para preparar una propuesta, presupuesto o factura y cualquier otra información que decidas compartir conmigo para poder valorar tu proyecto.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>3. Para qué uso tus datos</h2>
+      <p>Trato tus datos para las siguientes finalidades:</p>
+      <p>Atender tus consultas y responder a los mensajes que me envíes.</p>
+      <p>Preparar propuestas, presupuestos o comunicaciones relacionadas con servicios de comunicación, diseño, contenido audiovisual, diseño web, edición de vídeo o grabación con dron.</p>
+      <p>Gestionar la relación profesional o contractual si decides trabajar conmigo.</p>
+      <p>Emitir facturas y cumplir obligaciones legales, fiscales y administrativas.</p>
+      <p>Mejorar la web y conocer qué contenidos funcionan mejor mediante cookies o herramientas de análisis, siempre según la configuración de consentimiento que corresponda.</p>
+      <p>Mantener la seguridad de la web y prevenir usos indebidos.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>4. Base legal para tratar tus datos</h2>
+      <p>La base legal depende del caso:</p>
+      <p>Cuando me escribes para pedir información, la base es tu consentimiento y/o la aplicación de medidas precontractuales.</p>
+      <p>Cuando contratas un servicio, la base es la ejecución del contrato o encargo profesional.</p>
+      <p>Cuando debo conservar datos por obligaciones fiscales, contables o legales, la base es el cumplimiento de una obligación legal.</p>
+      <p>Cuando uso datos técnicos para mejorar la web o protegerla, la base puede ser el interés legítimo, siempre respetando tus derechos.</p>
+      <p>Cuando se usen cookies no necesarias, la base será tu consentimiento.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>5. Cuánto tiempo conservaré tus datos</h2>
+      <p>Conservaré tus datos solo durante el tiempo necesario para cumplir la finalidad para la que fueron recogidos.</p>
+      <p>Los datos de consultas se conservarán durante el tiempo necesario para responderte y hacer seguimiento razonable de la comunicación.</p>
+      <p>Los datos relacionados con servicios contratados se conservarán mientras dure la relación profesional y, después, durante los plazos exigidos por la normativa fiscal, contable o legal.</p>
+      <p>Los datos tratados mediante cookies se conservarán según lo indicado en la política de cookies o en el panel de configuración correspondiente.</p>
+      <p>Cuando los datos ya no sean necesarios, se eliminarán o se mantendrán bloqueados durante los plazos legales aplicables.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>6. A quién puedo comunicar tus datos</h2>
+      <p>No vendo tus datos ni los cedo a terceros con fines comerciales.</p>
+      <p>Tus datos solo podrán comunicarse cuando sea necesario para prestar el servicio o cumplir obligaciones legales. Por ejemplo:</p>
+      <p>A proveedores tecnológicos necesarios para el funcionamiento de la web, correo electrónico, alojamiento, mantenimiento o herramientas de gestión.</p>
+      <p>A gestorías, asesorías o administraciones públicas cuando exista una obligación legal.</p>
+      <p>A colaboradores profesionales cuando sea necesario para ejecutar un proyecto, siempre bajo criterios de confidencialidad y minimización de datos.</p>
+      <p>Si trabajo con proveedores que puedan tratar datos por mi cuenta, estos actuarán como encargados del tratamiento y deberán ofrecer garantías adecuadas de protección de datos.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>7. Redes sociales y enlaces externos</h2>
+      <p>Esta web puede incluir enlaces a perfiles o plataformas externas, como Instagram o LinkedIn. Si accedes a esas plataformas, el tratamiento de tus datos se regirá por sus propias políticas de privacidad y condiciones.</p>
+      <p>Nunca está de más advertir que esta web no es responsable de cómo esas plataformas tratan tus datos una vez sales de aquí. Internet, ese ecosistema donde haces clic en "aceptar" y de pronto media humanidad tiene opinión sobre tus preferencias (este punto es solo para saber si sigues leyendo este apartado y quitarme responsabilidad en las decisiones de tus algoritmos).</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>8. Cookies</h2>
+      <p>Esta web puede utilizar cookies propias o de terceros para permitir su funcionamiento, mejorar la experiencia de navegación y obtener información estadística sobre el uso de la página.</p>
+      <p>Puedes aceptar, rechazar o configurar las cookies según las opciones disponibles en la sección de cookies. Para más información consulta la política de cookies de esta web.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>9. Derechos de las personas usuarias</h2>
+      <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento, portabilidad y cuando proceda, el derecho a no ser objeto de decisiones automatizadas.</p>
+      <p>Para ejercerlos, puedes escribir a:</p>
+      <div class="privacidad-datos">
+        <a href="mailto:info@corpany.es">info@corpany.es</a>
+      </div>
+      <p>En el asunto puedes indicar: <strong>"Protección de datos"</strong>.</p>
+      <p>Es posible que te solicite información adicional para confirmar tu identidad si fuera necesario. No por gusto, sino porque entregar datos personales a cualquiera que los pida sería una pésima idea con sombrero (por muy bonitos que sean, sobre todo los estilo pamela del personaje de esta web…)</p>
+      <p>También tienes derecho a presentar una reclamación ante la <a href="https://www.aepd.es/" target="_blank" rel="noopener">Agencia Española de Protección de Datos</a> si consideras que el tratamiento de tus datos no se ajusta a la normativa aplicable.</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>10. Seguridad de los datos</h2>
+      <p>Aplico medidas técnicas y organizativas razonables para proteger tus datos frente a accesos no autorizados, pérdida, alteración o divulgación indebida.</p>
+      <p>Aun así, ningún sistema conectado a internet es absolutamente invulnerable. Haré lo razonable y exigible para proteger la información, pero no prometeré magia, porque esto es una web, no un hechizo medieval (ya terminamos, lo prometo).</p>
+    </div>
+
+    <div class="privacidad-section">
+      <h2>11. Cambios en esta política</h2>
+      <p>Las política de privacidad se actualizarán cada cierto tiempo para adaptarla a cambios legales, técnicos o de funcionamiento de la web.</p>
+      <p>La versión publicada en esta página será la vigente en cada momento.</p>
+      <p><strong>Última actualización:</strong> 16/05/2026</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-social">
+        <a href="/">
+          <img src="/Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="footer-logo" />
+        </a>
+        <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-2-2 2 2 0 00-2 2v6h-4v-6a6 6 0 016-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+        <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="mailto:info@corpany.es" aria-label="Email" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      <div class="footer-links">
+        <a href="/privacidad">Privacidad</a>
+        <a href="#">Cookies</a>
+        <a href="#">Aviso legal</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Copyright © 2026 CORPANY</span>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger?.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>
