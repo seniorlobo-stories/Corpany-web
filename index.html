@@ -2230,9 +2230,10 @@
 
     .contact-modal-character {
       width: 100%;
-      max-width: 200px;
-      margin-bottom: 20px;
+      max-width: 420px;
+      margin-top: 20px;
       align-self: center;
+      order: 2;
     }
 
     .contact-modal-right {
@@ -2651,19 +2652,30 @@
       .contact-modal-left {
         border-right: none;
         border-bottom: 1px solid rgba(26,26,26,0.15);
-        padding: 28px 20px 16px;
+        padding: 20px 20px 16px;
         flex-direction: row;
         align-items: center;
         gap: 14px;
       }
 
-      .contact-modal-desc { display: none; }
+      .contact-modal-desc {
+        display: block;
+        font-size: 12px;
+      }
 
       .contact-modal-character {
-        max-width: 72px;
+        max-width: 130px;
         margin-top: 0;
         margin-bottom: 0;
         flex-shrink: 0;
+        order: 0;
+        align-self: center;
+      }
+
+      .contact-modal-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .contact-modal-right { padding: 20px 20px 28px; }
@@ -2953,8 +2965,10 @@
 
       <div class="contact-modal-left">
         <img src="Personaje/character_modal_contact.png" alt="" class="contact-modal-character" aria-hidden="true">
-        <h2 class="contact-modal-title" id="contactModalTitle">Cuéntame<br>tu idea</h2>
-        <p class="contact-modal-desc">Antes de empezar con la sesión de magia, necesito recopilar un par de datos para entender tu problema.</p>
+        <div class="contact-modal-text">
+          <h2 class="contact-modal-title" id="contactModalTitle">Cuéntame<br>tu idea</h2>
+          <p class="contact-modal-desc">Antes de empezar con la sesión de magia, necesito recopilar un par de datos para entender tu problema.</p>
+        </div>
       </div>
 
       <div class="contact-modal-right">
@@ -3786,6 +3800,11 @@
                presupuesto && isValidEmail(email) && privacy;
       var btn = document.getElementById('cfSubmit');
       if (btn) btn.disabled = !ok;
+      return !!ok;
+    }
+
+    function hideSuccessMsg() {
+      if (successMsg) successMsg.style.display = 'none';
     }
 
     var dirtyFields = {};
@@ -3798,12 +3817,16 @@
         checkFormValidity();
       });
       el.addEventListener('input', function() {
+        hideSuccessMsg();
         if (dirtyFields[id]) validateField(id);
         checkFormValidity();
       });
     });
     var privacyCheck = document.getElementById('cf-privacy-check');
-    privacyCheck && privacyCheck.addEventListener('change', checkFormValidity);
+    privacyCheck && privacyCheck.addEventListener('change', function() {
+      hideSuccessMsg();
+      checkFormValidity();
+    });
 
     // ── Custom select
     var selectBtn  = document.getElementById('cfSelectBtn');
@@ -3971,6 +3994,7 @@
     function resetForm() {
       document.getElementById('cfForm').classList.remove('cf-form-sending');
       submitBtn.classList.remove('is-sending');
+      submitBtn.textContent = 'Enviar formulario';
       removeSkeletonOverlays();
       ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(function(id) {
         var el = document.getElementById(id);
@@ -3987,6 +4011,13 @@
     }
 
     submitBtn && submitBtn.addEventListener('click', function() {
+      if (submitBtn.classList.contains('is-sending')) return;
+      if (!checkFormValidity()) {
+        submitWrap.classList.add('tooltip-visible');
+        clearTimeout(tooltipTimer);
+        tooltipTimer = setTimeout(function() { submitWrap.classList.remove('tooltip-visible'); }, 3000);
+        return;
+      }
       submitBtn.textContent = 'Enviando...';
       submitBtn.disabled = true;
       submitBtn.classList.add('is-sending');
@@ -4001,31 +4032,25 @@
         email:       document.getElementById('cf-email').value.trim()
       };
 
+      var fetchOpts = { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) };
+
       var sendPromise;
       if (selectedFile) {
         sendPromise = fileToBase64(selectedFile).then(function(b64) {
           payload.archivo       = b64;
           payload.archivoNombre = selectedFile.name;
           payload.archivoTipo   = selectedFile.type;
-          return fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+          return fetch(APPS_SCRIPT_URL, fetchOpts);
         });
       } else {
-        sendPromise = fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        sendPromise = fetch(APPS_SCRIPT_URL, fetchOpts);
       }
 
       sendPromise
-        .then(function(r) { return r.json(); })
-        .then(function(res) {
-          if (res.ok) {
-            resetForm();
-            if (successMsg) successMsg.style.display = 'block';
-          } else {
-            submitBtn.textContent = 'Enviar formulario';
-            submitBtn.classList.remove('is-sending');
-            document.getElementById('cfForm').classList.remove('cf-form-sending');
-            removeSkeletonOverlays();
-            checkFormValidity();
-          }
+        .then(function() {
+          resetForm();
+          submitBtn.disabled = false;
+          if (successMsg) successMsg.style.display = 'block';
         })
         .catch(function() {
           submitBtn.textContent = 'Enviar formulario';
