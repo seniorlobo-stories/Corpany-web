@@ -2150,6 +2150,524 @@
       .dm-tabs { order: 3; margin-bottom: 0; margin-top: 1rem; }
     }
 
+
+    /* ── CONTACT MODAL ── */
+    .contact-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      background: rgba(0,0,0,0.72);
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .contact-modal-overlay.active { display: flex; }
+
+    .contact-modal {
+      background: var(--carne);
+      border: 2px solid var(--black);
+      border-radius: 16px;
+      box-shadow: 8px 8px 0 var(--black);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      max-width: 860px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      animation: cmodal-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      margin: 0 auto 40px;
+    }
+
+    @keyframes cmodal-in {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .contact-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: var(--black);
+      line-height: 1;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+      font-family: var(--font-body);
+      z-index: 10;
+    }
+
+    .contact-modal-close:hover { opacity: 1; }
+
+    .contact-modal-left {
+      padding: 40px 24px 32px;
+      border-right: 1px solid rgba(26,26,26,0.18);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .contact-modal-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .contact-modal-desc {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    .contact-modal-character {
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 20px;
+      align-self: center;
+    }
+
+    .contact-modal-right {
+      padding: 40px 36px 36px;
+    }
+
+
+    /* Form fields */
+    .cf-field { margin-bottom: 16px; }
+
+    .cf-label {
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .cf-input, .cf-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--black);
+      outline: none;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+
+    .cf-input:focus, .cf-textarea:focus {
+      box-shadow: 3px 3px 0 var(--naranja);
+      border-color: var(--naranja);
+    }
+    .cf-input.cf-valid, .cf-textarea.cf-valid {
+      border-color: var(--turquesa);
+      box-shadow: 3px 3px 0 var(--turquesa);
+    }
+    .cf-input.cf-valid:focus, .cf-textarea.cf-valid:focus {
+      border-color: var(--naranja);
+      box-shadow: 3px 3px 0 var(--naranja);
+    }
+
+    .cf-input::placeholder, .cf-textarea::placeholder {
+      color: var(--gray);
+      opacity: 0.6;
+    }
+
+    .cf-textarea { resize: none; min-height: 88px; }
+
+    /* Custom select */
+    .cf-select-wrap { position: relative; }
+
+    .cf-select-btn {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--gray);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: box-shadow 0.15s;
+    }
+
+    .cf-select-btn.selected { color: var(--black); }
+
+    .cf-select-btn-arrow {
+      font-size: 18px;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .cf-select-btn.open .cf-select-btn-arrow { transform: rotate(90deg); }
+
+    .cf-select-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0 var(--black);
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .cf-select-dropdown.open { display: block; }
+
+    .cf-select-option {
+      padding: 11px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .cf-select-option:hover { background: var(--carne); }
+    .cf-select-option.active { background: var(--turquesa); font-weight: 600; }
+
+    /* Email with icon */
+    .cf-input-icon-wrap { position: relative; }
+
+    .cf-input-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      pointer-events: none;
+      display: flex;
+    }
+
+    .cf-input-with-icon { padding-left: 38px; }
+
+    /* Privacy checkbox */
+    .cf-privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .cf-privacy input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      background: var(--white);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      box-shadow: 2px 2px 0 var(--black);
+      transition: background 0.15s;
+      margin-top: 1px;
+    }
+
+    .cf-privacy input[type="checkbox"]:checked { background: var(--turquesa); }
+
+    .cf-privacy input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: block;
+      text-align: center;
+      line-height: 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .cf-privacy label {
+      font-size: 13px;
+      color: var(--black);
+      cursor: pointer;
+      line-height: 1.55;
+    }
+
+    .cf-privacy label a {
+      color: var(--black);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Submit */
+    .cf-submit {
+      width: 100%;
+      padding: 13px 24px;
+      background: var(--turquesa);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border: 2px solid var(--black);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0 var(--black);
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+
+    .cf-submit:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(2px, 2px); }
+    .cf-submit:active { box-shadow: 0 0 0 var(--black); transform: translate(4px, 4px); }
+    .cf-submit:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0 var(--black); }
+    .cf-submit-success { display: none; margin-top: 14px; text-align: center; color: var(--turquesa); font-size: 14px; font-weight: 600; line-height: 1.5; }
+
+    /* Error state */
+    .cf-input.cf-error, .cf-textarea.cf-error {
+      border-color: var(--inferno);
+      box-shadow: 3px 3px 0 var(--inferno);
+    }
+    .cf-field-error {
+      font-size: 12px;
+      color: var(--inferno);
+      margin-top: 5px;
+      line-height: 1.4;
+      min-height: 0;
+    }
+
+    /* Sending skeleton animation */
+    @keyframes cf-skeleton {
+      0%, 100% { background: linear-gradient(90deg, #4a8c9f 25%, #ffffff 25%); }
+      25%       { background: linear-gradient(90deg, #7aabb8 50%, #ffffff 50%); }
+      50%       { background: linear-gradient(90deg, #7dd5cf 75%, #ffffff 75%); }
+      75%       { background: linear-gradient(90deg, #00d2c5 100%, #ffffff 100%); }
+    }
+    /* textarea, select, dropzone: animación directa (no tienen autofill) */
+    #cfForm.cf-form-sending .cf-textarea,
+    #cfForm.cf-form-sending .cf-select-btn,
+    #cfForm.cf-form-sending .cf-dropzone {
+      -webkit-animation: cf-skeleton 4s step-end infinite;
+      animation: cf-skeleton 4s step-end infinite;
+      box-shadow: 3px 3px 0 #1a1a1a !important;
+    }
+    /* todos los campos: ocultar texto y bloquear interacción */
+    #cfForm.cf-form-sending .cf-input,
+    #cfForm.cf-form-sending .cf-textarea,
+    #cfForm.cf-form-sending .cf-select-btn,
+    #cfForm.cf-form-sending .cf-dropzone {
+      pointer-events: none;
+      color: transparent !important;
+      -webkit-text-fill-color: transparent !important;
+      border: 2px solid #1a1a1a !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #cfForm.cf-form-sending .cf-input::placeholder,
+    #cfForm.cf-form-sending .cf-textarea::placeholder { color: transparent; }
+    #cfForm.cf-form-sending .cf-input-icon { opacity: 0; }
+    #cfForm.cf-form-sending .cf-select-btn-arrow { opacity: 0; }
+    /* overlay para inputs con autofill (div encima del input, inmune al autofill del navegador) */
+    .cf-skel-wrap { position: relative; display: block; }
+    .cf-skel-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      border: 2px solid #1a1a1a;
+      box-shadow: 3px 3px 0 #1a1a1a;
+      pointer-events: none;
+      z-index: 5;
+      -webkit-animation: cf-skeleton 4s step-end infinite;
+      animation: cf-skeleton 4s step-end infinite;
+    }
+    #cfForm.cf-form-sending .cf-dropzone-idle,
+    #cfForm.cf-form-sending .cf-dropzone-selected { visibility: hidden; }
+
+    /* Submit tooltip */
+    .cf-submit-wrap { position: relative; }
+    .cf-submit-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--black);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-align: center;
+      max-width: 240px;
+      width: max-content;
+      line-height: 1.4;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s;
+      z-index: 10;
+    }
+    .cf-submit-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--black);
+    }
+    .cf-submit-wrap.tooltip-visible .cf-submit-tooltip { opacity: 1; }
+
+    /* Success */
+    .cf-success {
+      display: none;
+      text-align: center;
+      padding: 56px 24px;
+    }
+
+    .cf-success.visible { display: block; }
+
+    .cf-success-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+    }
+
+    .cf-success-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .cf-success-body {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    /* Dropzone */
+    .cf-dropzone {
+      border: 2px dashed var(--black);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .cf-dropzone:hover { background: rgba(0,210,197,0.06); border-color: var(--turquesa); }
+    .cf-dropzone.drag-over { background: rgba(0,210,197,0.12); border-color: var(--turquesa); box-shadow: 3px 3px 0 var(--turquesa); }
+    .cf-dropzone.cf-error { border-color: var(--inferno); box-shadow: 3px 3px 0 var(--inferno); }
+
+    .cf-dropzone-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .cf-dropzone-text {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .cf-dropzone-pill {
+      display: inline-block;
+      padding: 4px 18px;
+      border: 1.5px solid var(--black);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--black);
+      letter-spacing: 0.02em;
+    }
+
+    .cf-dropzone-selected {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .cf-dropzone-selected.visible { display: flex; }
+
+    .cf-dropzone-filename {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      word-break: break-all;
+      flex: 1;
+      text-align: left;
+    }
+
+    .cf-dropzone-remove {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--gray);
+      line-height: 1;
+      flex-shrink: 0;
+      z-index: 2;
+      position: relative;
+      transition: color 0.15s;
+    }
+
+    .cf-dropzone-remove:hover { color: var(--inferno); }
+
+    .cf-dropzone-hint {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Responsive modal */
+    @media (max-width: 768px) {
+      .contact-modal-overlay {
+        padding: 12px;
+      }
+
+      .contact-modal {
+        grid-template-columns: 1fr;
+        border-radius: 12px;
+      }
+
+      .contact-modal-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(26,26,26,0.15);
+        padding: 28px 20px 16px;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .contact-modal-desc { display: none; }
+
+      .contact-modal-character {
+        max-width: 72px;
+        margin-top: 0;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      .contact-modal-right { padding: 20px 20px 28px; }
+    }
   </style>
 </head>
 <body>
@@ -2424,9 +2942,108 @@
     <div class="letsdance-box card card-colored">
       <h2 class="letsdance-title">Let's dance</h2>
       <p class="letsdance-body">Llevas tiempo dándole vueltas a cómo mejorar la marca de tu empresa. Yo también le he dado vueltas a cómo poder ayudarte</p>
-      <a href="https://www.instagram.com/companycorrupt" target="_blank" rel="noopener noreferrer" class="btn-outline">Empecemos a trabajar</a>
+      <button class="btn-outline" id="openContactModal">Empecemos a trabajar</button>
     </div>
   </section>
+
+  <!-- CONTACT MODAL -->
+  <div class="contact-modal-overlay" id="contactModalOverlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="contactModalClose" aria-label="Cerrar">×</button>
+
+      <div class="contact-modal-left">
+        <img src="Personaje/character_modal_contact.png" alt="" class="contact-modal-character" aria-hidden="true">
+        <h2 class="contact-modal-title" id="contactModalTitle">Cuéntame<br>tu idea</h2>
+        <p class="contact-modal-desc">Antes de empezar con la sesión de magia, necesito recopilar un par de datos para entender tu problema.</p>
+      </div>
+
+      <div class="contact-modal-right">
+        <div id="cfForm">
+
+          <div class="cf-field">
+            <label class="cf-label" for="cf-nombre">Nombre</label>
+            <input class="cf-input" type="text" id="cf-nombre" name="nombre" placeholder="John Galt" autocomplete="name" maxlength="30">
+            <p class="cf-field-error" id="cf-error-nombre"></p>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label" for="cf-empresa">Proyecto/Empresa</label>
+            <input class="cf-input" type="text" id="cf-empresa" name="empresa" placeholder="Atlantis" maxlength="30">
+            <p class="cf-field-error" id="cf-error-empresa"></p>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label" for="cf-necesitas">Cuéntame qué necesitas</label>
+            <textarea class="cf-textarea" id="cf-necesitas" name="necesitas" placeholder="Si te lo contara no me creerías, así que empecemos por el principio..." maxlength="600"></textarea>
+            <p class="cf-field-error" id="cf-error-necesitas"></p>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Presupuesto estimado</label>
+            <div class="cf-select-wrap">
+              <button type="button" class="cf-select-btn" id="cfSelectBtn" aria-haspopup="listbox" aria-expanded="false">
+                <span id="cfSelectValue">-selecciona un rango-</span>
+                <span class="cf-select-btn-arrow">›</span>
+              </button>
+              <div class="cf-select-dropdown" id="cfSelectDropdown" role="listbox">
+                <div class="cf-select-option" data-value="200-500">200 - 500 €</div>
+                <div class="cf-select-option" data-value="500-1000">500 - 1.000 €</div>
+                <div class="cf-select-option" data-value="1000-5000">1.000 - 5.000 €</div>
+                <div class="cf-select-option" data-value="10000+">+ 10.000 €</div>
+              </div>
+              <input type="hidden" id="cf-presupuesto" name="presupuesto">
+            </div>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label" for="cf-email">Email</label>
+            <div class="cf-input-icon-wrap">
+              <span class="cf-input-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <input class="cf-input cf-input-with-icon" type="email" id="cf-email" name="email" placeholder="johngalt@atlantis.com" autocomplete="email">
+            </div>
+            <p class="cf-field-error" id="cf-error-email"></p>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Resumen del proyecto <span style="font-weight:400;color:var(--gray)">(opcional)</span></label>
+            <div class="cf-dropzone" id="cfDropzone">
+              <input type="file" id="cf-archivo" name="archivo" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" class="cf-dropzone-input" aria-label="Seleccionar archivo">
+              <div class="cf-dropzone-idle" id="cfDropzoneIdle">
+                <p class="cf-dropzone-text">Haz click para seleccionar un archivo o arrastralo aquí</p>
+                <span class="cf-dropzone-pill">Tamaño máximo: 5mb</span>
+              </div>
+              <div class="cf-dropzone-selected" id="cfDropzoneSelected">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cf-dropzone-filename" id="cfDropzoneFilename"></span>
+                <button type="button" class="cf-dropzone-remove" id="cfDropzoneRemove" aria-label="Eliminar archivo">×</button>
+              </div>
+            </div>
+            <p class="cf-dropzone-hint">Formatos permitidos: PDF, Word, PNG, JPG · 1 archivo · máx. 5 MB</p>
+          </div>
+
+          <div class="cf-privacy">
+            <input type="checkbox" id="cf-privacy-check" name="privacy">
+            <label for="cf-privacy-check">He leído y acepto la <a href="/privacidad">política de privacidad</a></label>
+          </div>
+
+          <div class="cf-submit-wrap" id="cfSubmitWrap">
+            <div class="cf-submit-tooltip">Rellena correctamente todos los campos del formulario para enviar los datos</div>
+            <button type="button" class="cf-submit" id="cfSubmit" disabled>Enviar formulario</button>
+          </div>
+          <p class="cf-submit-success" id="cfSubmitSuccess">El formulario se ha enviado correctamente, en breve me pondré en contacto contigo</p>
+
+        </div>
+
+        <div class="cf-success" id="cfSuccess">
+          <div class="cf-success-icon">✓</div>
+          <h3 class="cf-success-title">¡Recibido!</h3>
+          <p class="cf-success-body">Gracias por escribirme. Te responderé en menos de 48 horas para que podamos empezar a trabajar en tu proyecto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- LIGHTBOX -->
   <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
@@ -3097,6 +3714,327 @@
     } else {
       dmBuild('ingresos');
     }
+  })();
+  </script>
+  <script>
+  // ── Contact Modal
+  (function() {
+    var overlay  = document.getElementById('contactModalOverlay');
+    var closeBtn = document.getElementById('contactModalClose');
+    var openBtn  = document.getElementById('openContactModal');
+
+    function openModal() {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    openBtn  && openBtn.addEventListener('click', openModal);
+    closeBtn && closeBtn.addEventListener('click', closeModal);
+    overlay  && overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay && overlay.classList.contains('active')) closeModal();
+    });
+
+    // ── Form validation
+    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    function setFieldError(fieldId, msg) {
+      var el    = document.getElementById(fieldId);
+      var errEl = document.getElementById('cf-error-' + fieldId.replace('cf-', ''));
+      if (el) {
+        el.classList.toggle('cf-error', !!msg);
+        el.classList.toggle('cf-valid', !msg && !!dirtyFields[fieldId]);
+      }
+      if (errEl) errEl.textContent = msg || '';
+    }
+
+    function validateField(fieldId) {
+      var el = document.getElementById(fieldId);
+      if (!el) return true;
+      var val = el.value.trim();
+      if (fieldId === 'cf-nombre' || fieldId === 'cf-empresa') {
+        if (!val)            { setFieldError(fieldId, 'Este campo es obligatorio'); return false; }
+        if (val.length > 30) { setFieldError(fieldId, 'Máximo 30 caracteres');      return false; }
+      } else if (fieldId === 'cf-necesitas') {
+        if (!val)             { setFieldError(fieldId, 'Este campo es obligatorio'); return false; }
+        if (val.length > 600) { setFieldError(fieldId, 'Máximo 600 caracteres');     return false; }
+      } else if (fieldId === 'cf-email') {
+        if (!val)              { setFieldError(fieldId, 'Este campo es obligatorio');  return false; }
+        if (!isValidEmail(val)){ setFieldError(fieldId, 'Introduce un email válido'); return false; }
+      }
+      setFieldError(fieldId, '');
+      return true;
+    }
+
+    function checkFormValidity() {
+      var nombre      = document.getElementById('cf-nombre').value.trim();
+      var empresa     = document.getElementById('cf-empresa').value.trim();
+      var necesitas   = document.getElementById('cf-necesitas').value.trim();
+      var presupuesto = document.getElementById('cf-presupuesto').value;
+      var email       = document.getElementById('cf-email').value.trim();
+      var privacy     = document.getElementById('cf-privacy-check').checked;
+      var ok = nombre && nombre.length <= 30 &&
+               empresa && empresa.length <= 30 &&
+               necesitas && necesitas.length <= 600 &&
+               presupuesto && isValidEmail(email) && privacy;
+      var btn = document.getElementById('cfSubmit');
+      if (btn) btn.disabled = !ok;
+    }
+
+    var dirtyFields = {};
+    ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('blur', function() {
+        dirtyFields[id] = true;
+        validateField(id);
+        checkFormValidity();
+      });
+      el.addEventListener('input', function() {
+        if (dirtyFields[id]) validateField(id);
+        checkFormValidity();
+      });
+    });
+    var privacyCheck = document.getElementById('cf-privacy-check');
+    privacyCheck && privacyCheck.addEventListener('change', checkFormValidity);
+
+    // ── Custom select
+    var selectBtn  = document.getElementById('cfSelectBtn');
+    var dropdown   = document.getElementById('cfSelectDropdown');
+    var selectVal  = document.getElementById('cfSelectValue');
+    var hiddenPres = document.getElementById('cf-presupuesto');
+
+    selectBtn && selectBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', !isOpen);
+      selectBtn.classList.toggle('open', !isOpen);
+      selectBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    dropdown && dropdown.querySelectorAll('.cf-select-option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        dropdown.querySelectorAll('.cf-select-option').forEach(function(o) { o.classList.remove('active'); });
+        opt.classList.add('active');
+        selectVal.textContent = opt.textContent;
+        hiddenPres.value = opt.dataset.value;
+        selectBtn.classList.remove('open');
+        selectBtn.classList.add('selected');
+        dropdown.classList.remove('open');
+        selectBtn.setAttribute('aria-expanded', 'false');
+        checkFormValidity();
+      });
+    });
+
+    document.addEventListener('click', function(e) {
+      if (selectBtn && !selectBtn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+        dropdown && dropdown.classList.remove('open');
+        selectBtn && selectBtn.classList.remove('open');
+        selectBtn && selectBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ── Dropzone
+    var dropzone        = document.getElementById('cfDropzone');
+    var dropzoneInput   = document.getElementById('cf-archivo');
+    var dropzoneIdle    = document.getElementById('cfDropzoneIdle');
+    var dropzoneSelView = document.getElementById('cfDropzoneSelected');
+    var dropzoneFilename= document.getElementById('cfDropzoneFilename');
+    var dropzoneRemove  = document.getElementById('cfDropzoneRemove');
+    var selectedFile    = null;
+
+    var ALLOWED_TYPES = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/png','image/jpeg'];
+    var ALLOWED_EXT   = /\.(pdf|doc|docx|png|jpg|jpeg)$/i;
+    var MAX_BYTES     = 5 * 1024 * 1024;
+
+    function setFile(file) {
+      if (!file) return;
+      if (!ALLOWED_EXT.test(file.name) && !ALLOWED_TYPES.includes(file.type)) {
+        showFileError('Formato no permitido. Usa PDF, Word, PNG o JPG.'); return;
+      }
+      if (file.size > MAX_BYTES) {
+        showFileError('El archivo supera el límite de 5 MB.'); return;
+      }
+      selectedFile = file;
+      dropzoneFilename.textContent = file.name;
+      dropzoneIdle.style.display    = 'none';
+      dropzoneSelView.classList.add('visible');
+      dropzone.classList.remove('cf-error');
+    }
+
+    function clearFile() {
+      selectedFile = null;
+      dropzoneInput.value = '';
+      dropzoneIdle.style.display = '';
+      dropzoneSelView.classList.remove('visible');
+    }
+
+    function showFileError(msg) {
+      dropzone.classList.add('cf-error');
+      var hint = dropzone.nextElementSibling;
+      var orig = hint.textContent;
+      hint.style.color = 'var(--inferno)';
+      hint.textContent = msg;
+      setTimeout(function() { hint.style.color = ''; hint.textContent = orig; dropzone.classList.remove('cf-error'); }, 3000);
+    }
+
+    dropzoneInput && dropzoneInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) setFile(this.files[0]);
+    });
+
+    dropzoneRemove && dropzoneRemove.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation(); clearFile();
+    });
+
+    if (dropzone) {
+      dropzone.addEventListener('dragover',  function(e) { e.preventDefault(); dropzone.classList.add('drag-over'); });
+      dropzone.addEventListener('dragleave', function(e) { if (!dropzone.contains(e.relatedTarget)) dropzone.classList.remove('drag-over'); });
+      dropzone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+        var files = e.dataTransfer.files;
+        if (files.length > 1) { showFileError('Solo se permite 1 archivo.'); return; }
+        if (files[0]) setFile(files[0]);
+      });
+    }
+
+    // ── Skeleton overlays (divs sobre los inputs para evitar el override de autofill del navegador)
+    var cfSkeletonInputIds = ['cf-nombre', 'cf-empresa', 'cf-email'];
+
+    function addSkeletonOverlays() {
+      cfSkeletonInputIds.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el || el.parentElement.classList.contains('cf-skel-wrap')) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'cf-skel-wrap';
+        el.parentElement.insertBefore(wrap, el);
+        wrap.appendChild(el);
+        var ov = document.createElement('div');
+        ov.className = 'cf-skel-overlay';
+        wrap.appendChild(ov);
+      });
+    }
+
+    function removeSkeletonOverlays() {
+      document.querySelectorAll('#cfForm .cf-skel-wrap').forEach(function(wrap) {
+        Array.from(wrap.children).forEach(function(child) {
+          if (!child.classList.contains('cf-skel-overlay')) {
+            wrap.parentElement.insertBefore(child, wrap);
+          }
+        });
+        if (wrap.parentElement) wrap.parentElement.removeChild(wrap);
+      });
+    }
+
+    // ── Form submit
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXZK922_4Cu-Xz7CqODMqzka8_U0Co8frSUPOd6JzlYaX8lGoo5tIcmnhm7GoIV7IsVw/exec';
+
+    var submitBtn  = document.getElementById('cfSubmit');
+    var submitWrap = document.getElementById('cfSubmitWrap');
+    var successMsg = document.getElementById('cfSubmitSuccess');
+
+    // Tooltip on disabled button
+    var tooltipTimer;
+    if (submitWrap) {
+      submitWrap.addEventListener('mouseenter', function() {
+        if (submitBtn && submitBtn.disabled && !submitBtn.classList.contains('is-sending')) submitWrap.classList.add('tooltip-visible');
+      });
+      submitWrap.addEventListener('mouseleave', function() {
+        submitWrap.classList.remove('tooltip-visible');
+        clearTimeout(tooltipTimer);
+      });
+      submitWrap.addEventListener('click', function() {
+        if (submitBtn && submitBtn.disabled && !submitBtn.classList.contains('is-sending')) {
+          submitWrap.classList.add('tooltip-visible');
+          clearTimeout(tooltipTimer);
+          tooltipTimer = setTimeout(function() { submitWrap.classList.remove('tooltip-visible'); }, 3000);
+        }
+      });
+    }
+
+    function fileToBase64(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload  = function() { resolve(reader.result.split(',')[1]); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function resetForm() {
+      document.getElementById('cfForm').classList.remove('cf-form-sending');
+      submitBtn.classList.remove('is-sending');
+      removeSkeletonOverlays();
+      ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.value = ''; el.classList.remove('cf-valid', 'cf-error'); }
+        dirtyFields[id] = false;
+      });
+      document.getElementById('cf-privacy-check').checked = false;
+      hiddenPres.value = '';
+      selectVal.textContent = '-selecciona un rango-';
+      selectBtn.classList.remove('selected');
+      dropdown.querySelectorAll('.cf-select-option').forEach(function(o) { o.classList.remove('active'); });
+      clearFile();
+      checkFormValidity();
+    }
+
+    submitBtn && submitBtn.addEventListener('click', function() {
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('is-sending');
+      document.getElementById('cfForm').classList.add('cf-form-sending');
+      addSkeletonOverlays();
+
+      var payload = {
+        nombre:      document.getElementById('cf-nombre').value.trim(),
+        empresa:     document.getElementById('cf-empresa').value.trim(),
+        necesitas:   document.getElementById('cf-necesitas').value.trim(),
+        presupuesto: hiddenPres.value,
+        email:       document.getElementById('cf-email').value.trim()
+      };
+
+      var sendPromise;
+      if (selectedFile) {
+        sendPromise = fileToBase64(selectedFile).then(function(b64) {
+          payload.archivo       = b64;
+          payload.archivoNombre = selectedFile.name;
+          payload.archivoTipo   = selectedFile.type;
+          return fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        });
+      } else {
+        sendPromise = fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+      }
+
+      sendPromise
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (res.ok) {
+            resetForm();
+            if (successMsg) successMsg.style.display = 'block';
+          } else {
+            submitBtn.textContent = 'Enviar formulario';
+            submitBtn.classList.remove('is-sending');
+            document.getElementById('cfForm').classList.remove('cf-form-sending');
+            removeSkeletonOverlays();
+            checkFormValidity();
+          }
+        })
+        .catch(function() {
+          submitBtn.textContent = 'Enviar formulario';
+          submitBtn.classList.remove('is-sending');
+          document.getElementById('cfForm').classList.remove('cf-form-sending');
+          removeSkeletonOverlays();
+          checkFormValidity();
+        });
+    });
   })();
   </script>
 </body>
