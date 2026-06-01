@@ -2493,6 +2493,7 @@
     /* overlay para inputs con autofill (div encima del input, inmune al autofill del navegador) */
     .cf-skel-wrap { position: relative; display: block; }
     .cf-skel-overlay {
+      display: none;
       position: absolute;
       inset: 0;
       border-radius: 8px;
@@ -2505,6 +2506,7 @@
       -webkit-animation: cf-skeleton 1.5s linear infinite;
       animation: cf-skeleton 1.5s linear infinite;
     }
+    #cfForm.cf-form-sending .cf-skel-overlay { display: block; }
     #cfForm.cf-form-sending .cf-dropzone-idle,
     #cfForm.cf-form-sending .cf-dropzone-selected { visibility: hidden; }
 
@@ -2992,13 +2994,19 @@
 
           <div class="cf-field">
             <label class="cf-label" for="cf-nombre">Nombre</label>
-            <input class="cf-input" type="text" id="cf-nombre" name="nombre" placeholder="John Galt" autocomplete="name" maxlength="30">
+            <div class="cf-skel-wrap">
+              <div class="cf-skel-overlay"></div>
+              <input class="cf-input" type="text" id="cf-nombre" name="nombre" placeholder="John Galt" autocomplete="name" maxlength="30">
+            </div>
             <p class="cf-field-error" id="cf-error-nombre"></p>
           </div>
 
           <div class="cf-field">
             <label class="cf-label" for="cf-empresa">Proyecto/Empresa</label>
-            <input class="cf-input" type="text" id="cf-empresa" name="empresa" placeholder="Atlantis" maxlength="30">
+            <div class="cf-skel-wrap">
+              <div class="cf-skel-overlay"></div>
+              <input class="cf-input" type="text" id="cf-empresa" name="empresa" placeholder="Atlantis" maxlength="30">
+            </div>
             <p class="cf-field-error" id="cf-error-empresa"></p>
           </div>
 
@@ -3027,7 +3035,8 @@
 
           <div class="cf-field">
             <label class="cf-label" for="cf-email">Email</label>
-            <div class="cf-input-icon-wrap">
+            <div class="cf-input-icon-wrap cf-skel-wrap">
+              <div class="cf-skel-overlay"></div>
               <span class="cf-input-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
               </span>
@@ -3771,310 +3780,226 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && overlay && overlay.classList.contains('active')) closeModal();
     });
+  })();
+  </script>
 
-    // ── Form validation
-    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  <script>
+  // ── Form Submit to Google Sheets
+  (function() {
+     const SHEET_URL = "https://script.google.com/macros/s/AKfycbw28c8d418SJtMSr5n2jrFGarZE9H8w-bfMm3bXBb6nHlzWNd65XwZ-Rx9pTDBMS3NpTA/exec";
+    const submitBtn = document.getElementById('cfSubmit');
+    const successMsg = document.getElementById('cfSubmitSuccess');
+    const cfForm = document.getElementById('cfForm');
 
-    function setFieldError(fieldId, msg) {
-      var el    = document.getElementById(fieldId);
-      var errEl = document.getElementById('cf-error-' + fieldId.replace('cf-', ''));
-      if (el) {
-        el.classList.toggle('cf-error', !!msg);
-        el.classList.toggle('cf-valid', !msg && !!dirtyFields[fieldId]);
+    // ── Custom Select Dropdown
+    const selectBtn = document.getElementById('cfSelectBtn');
+    const dropdown = document.getElementById('cfSelectDropdown');
+    const selectValue = document.getElementById('cfSelectValue');
+    const hiddenPresupuesto = document.getElementById('cf-presupuesto');
+
+    if (selectBtn && dropdown) {
+      selectBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('open');
+        dropdown.classList.toggle('open', !isOpen);
+        selectBtn.classList.toggle('open', !isOpen);
+        selectBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      dropdown.querySelectorAll('.cf-select-option').forEach(option => {
+        option.addEventListener('click', function() {
+          dropdown.querySelectorAll('.cf-select-option').forEach(o => o.classList.remove('active'));
+          option.classList.add('active');
+          selectValue.textContent = option.textContent;
+          hiddenPresupuesto.value = option.dataset.value;
+          selectBtn.classList.remove('open');
+          selectBtn.classList.add('selected');
+          dropdown.classList.remove('open');
+          selectBtn.setAttribute('aria-expanded', 'false');
+          checkFormValidity();
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        if (selectBtn && !selectBtn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          selectBtn.classList.remove('open');
+          selectBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // ── Form Validation
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function setFieldError(fieldId, errorMsg) {
+      const input = document.getElementById(fieldId);
+      const errorEl = document.getElementById('cf-error-' + fieldId.replace('cf-', ''));
+      
+      if (input) {
+        input.classList.toggle('cf-error', !!errorMsg);
+        input.classList.toggle('cf-valid', !errorMsg && input.value.trim() !== '');
       }
-      if (errEl) errEl.textContent = msg || '';
+      
+      if (errorEl) {
+        errorEl.textContent = errorMsg || '';
+      }
     }
 
     function validateField(fieldId) {
-      var el = document.getElementById(fieldId);
-      if (!el) return true;
-      var val = el.value.trim();
+      const input = document.getElementById(fieldId);
+      if (!input) return true;
+      
+      const value = input.value.trim();
+
       if (fieldId === 'cf-nombre' || fieldId === 'cf-empresa') {
-        if (!val)            { setFieldError(fieldId, 'Este campo es obligatorio'); return false; }
-        if (val.length > 30) { setFieldError(fieldId, 'Máximo 30 caracteres');      return false; }
+        if (!value) {
+          setFieldError(fieldId, 'Este campo es obligatorio');
+          return false;
+        }
+        if (value.length > 30) {
+          setFieldError(fieldId, 'Máximo 30 caracteres');
+          return false;
+        }
       } else if (fieldId === 'cf-necesitas') {
-        if (!val)             { setFieldError(fieldId, 'Este campo es obligatorio'); return false; }
-        if (val.length > 600) { setFieldError(fieldId, 'Máximo 600 caracteres');     return false; }
+        if (!value) {
+          setFieldError(fieldId, 'Este campo es obligatorio');
+          return false;
+        }
+        if (value.length > 600) {
+          setFieldError(fieldId, 'Máximo 600 caracteres');
+          return false;
+        }
       } else if (fieldId === 'cf-email') {
-        if (!val)              { setFieldError(fieldId, 'Este campo es obligatorio');  return false; }
-        if (!isValidEmail(val)){ setFieldError(fieldId, 'Introduce un email válido'); return false; }
+        if (!value) {
+          setFieldError(fieldId, 'Este campo es obligatorio');
+          return false;
+        }
+        if (!isValidEmail(value)) {
+          setFieldError(fieldId, 'Email no válido');
+          return false;
+        }
       }
+      
       setFieldError(fieldId, '');
       return true;
     }
 
     function checkFormValidity() {
-      var nombre      = document.getElementById('cf-nombre').value.trim();
-      var empresa     = document.getElementById('cf-empresa').value.trim();
-      var necesitas   = document.getElementById('cf-necesitas').value.trim();
-      var presupuesto = document.getElementById('cf-presupuesto').value;
-      var email       = document.getElementById('cf-email').value.trim();
-      var privacy     = document.getElementById('cf-privacy-check').checked;
-      var ok = nombre && nombre.length <= 30 &&
-               empresa && empresa.length <= 30 &&
-               necesitas && necesitas.length <= 600 &&
-               presupuesto && isValidEmail(email) && privacy;
-      var btn = document.getElementById('cfSubmit');
-      if (btn) btn.disabled = !ok;
-      return !!ok;
+      const nombre = document.getElementById('cf-nombre').value.trim();
+      const empresa = document.getElementById('cf-empresa').value.trim();
+      const necesitas = document.getElementById('cf-necesitas').value.trim();
+      const presupuesto = document.getElementById('cf-presupuesto').value;
+      const email = document.getElementById('cf-email').value.trim();
+      const privacy = document.getElementById('cf-privacy-check').checked;
+
+      const isValid = nombre && nombre.length <= 30 &&
+                      empresa && empresa.length <= 30 &&
+                      necesitas && necesitas.length <= 600 &&
+                      presupuesto &&
+                      isValidEmail(email) &&
+                      privacy;
+
+      if (submitBtn) {
+        submitBtn.disabled = !isValid;
+      }
+
+      return isValid;
     }
 
-    function hideSuccessMsg() {
-      if (successMsg) successMsg.style.display = 'none';
-    }
+    // ── Attach validation listeners
+    ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(fieldId => {
+      const input = document.getElementById(fieldId);
+      if (!input) return;
 
-    var dirtyFields = {};
-    ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener('blur', function() {
-        dirtyFields[id] = true;
-        validateField(id);
+      input.addEventListener('blur', function() {
+        validateField(fieldId);
         checkFormValidity();
       });
-      el.addEventListener('input', function() {
-        hideSuccessMsg();
-        if (dirtyFields[id]) validateField(id);
-        checkFormValidity();
-      });
-    });
-    var privacyCheck = document.getElementById('cf-privacy-check');
-    privacyCheck && privacyCheck.addEventListener('change', function() {
-      hideSuccessMsg();
-      checkFormValidity();
-    });
 
-    // ── Custom select
-    var selectBtn  = document.getElementById('cfSelectBtn');
-    var dropdown   = document.getElementById('cfSelectDropdown');
-    var selectVal  = document.getElementById('cfSelectValue');
-    var hiddenPres = document.getElementById('cf-presupuesto');
-
-    selectBtn && selectBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var isOpen = dropdown.classList.contains('open');
-      dropdown.classList.toggle('open', !isOpen);
-      selectBtn.classList.toggle('open', !isOpen);
-      selectBtn.setAttribute('aria-expanded', String(!isOpen));
-    });
-
-    dropdown && dropdown.querySelectorAll('.cf-select-option').forEach(function(opt) {
-      opt.addEventListener('click', function() {
-        dropdown.querySelectorAll('.cf-select-option').forEach(function(o) { o.classList.remove('active'); });
-        opt.classList.add('active');
-        selectVal.textContent = opt.textContent;
-        hiddenPres.value = opt.dataset.value;
-        selectBtn.classList.remove('open');
-        selectBtn.classList.add('selected');
-        dropdown.classList.remove('open');
-        selectBtn.setAttribute('aria-expanded', 'false');
+      input.addEventListener('input', function() {
+        if (successMsg) successMsg.style.display = 'none';
         checkFormValidity();
       });
     });
 
-    document.addEventListener('click', function(e) {
-      if (selectBtn && !selectBtn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
-        dropdown && dropdown.classList.remove('open');
-        selectBtn && selectBtn.classList.remove('open');
-        selectBtn && selectBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // ── Dropzone
-    var dropzone        = document.getElementById('cfDropzone');
-    var dropzoneInput   = document.getElementById('cf-archivo');
-    var dropzoneIdle    = document.getElementById('cfDropzoneIdle');
-    var dropzoneSelView = document.getElementById('cfDropzoneSelected');
-    var dropzoneFilename= document.getElementById('cfDropzoneFilename');
-    var dropzoneRemove  = document.getElementById('cfDropzoneRemove');
-    var selectedFile    = null;
-
-    var ALLOWED_TYPES = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/png','image/jpeg'];
-    var ALLOWED_EXT   = /\.(pdf|doc|docx|png|jpg|jpeg)$/i;
-    var MAX_BYTES     = 5 * 1024 * 1024;
-
-    function setFile(file) {
-      if (!file) return;
-      if (!ALLOWED_EXT.test(file.name) && !ALLOWED_TYPES.includes(file.type)) {
-        showFileError('Formato no permitido. Usa PDF, Word, PNG o JPG.'); return;
-      }
-      if (file.size > MAX_BYTES) {
-        showFileError('El archivo supera el límite de 5 MB.'); return;
-      }
-      selectedFile = file;
-      dropzoneFilename.textContent = file.name;
-      dropzoneIdle.style.display    = 'none';
-      dropzoneSelView.classList.add('visible');
-      dropzone.classList.remove('cf-error');
-    }
-
-    function clearFile() {
-      selectedFile = null;
-      dropzoneInput.value = '';
-      dropzoneIdle.style.display = '';
-      dropzoneSelView.classList.remove('visible');
-    }
-
-    function showFileError(msg) {
-      dropzone.classList.add('cf-error');
-      var hint = dropzone.nextElementSibling;
-      var orig = hint.textContent;
-      hint.style.color = 'var(--inferno)';
-      hint.textContent = msg;
-      setTimeout(function() { hint.style.color = ''; hint.textContent = orig; dropzone.classList.remove('cf-error'); }, 3000);
-    }
-
-    dropzoneInput && dropzoneInput.addEventListener('change', function() {
-      if (this.files && this.files[0]) setFile(this.files[0]);
-    });
-
-    dropzoneRemove && dropzoneRemove.addEventListener('click', function(e) {
-      e.preventDefault(); e.stopPropagation(); clearFile();
-    });
-
-    if (dropzone) {
-      dropzone.addEventListener('dragover',  function(e) { e.preventDefault(); dropzone.classList.add('drag-over'); });
-      dropzone.addEventListener('dragleave', function(e) { if (!dropzone.contains(e.relatedTarget)) dropzone.classList.remove('drag-over'); });
-      dropzone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropzone.classList.remove('drag-over');
-        var files = e.dataTransfer.files;
-        if (files.length > 1) { showFileError('Solo se permite 1 archivo.'); return; }
-        if (files[0]) setFile(files[0]);
+    const privacyCheck = document.getElementById('cf-privacy-check');
+    if (privacyCheck) {
+      privacyCheck.addEventListener('change', function() {
+        checkFormValidity();
       });
     }
 
-    // ── Skeleton overlays (divs sobre los inputs para evitar el override de autofill del navegador)
-    var cfSkeletonInputIds = ['cf-nombre', 'cf-empresa', 'cf-email'];
+    // ── Submit handler
+    if (submitBtn) {
+      submitBtn.addEventListener('click', async function() {
+        if (!checkFormValidity()) return;
 
-    function addSkeletonOverlays() {
-      cfSkeletonInputIds.forEach(function(id) {
-        var el = document.getElementById(id);
-        if (!el || el.parentElement.classList.contains('cf-skel-wrap')) return;
-        var wrap = document.createElement('div');
-        wrap.className = 'cf-skel-wrap';
-        el.parentElement.insertBefore(wrap, el);
-        wrap.appendChild(el);
-        var ov = document.createElement('div');
-        ov.className = 'cf-skel-overlay';
-        wrap.appendChild(ov);
-      });
-    }
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+        if (cfForm) cfForm.classList.add('cf-form-sending');
 
-    function removeSkeletonOverlays() {
-      document.querySelectorAll('#cfForm .cf-skel-wrap').forEach(function(wrap) {
-        Array.from(wrap.children).forEach(function(child) {
-          if (!child.classList.contains('cf-skel-overlay')) {
-            wrap.parentElement.insertBefore(child, wrap);
+        try {
+          const nombre = document.getElementById('cf-nombre').value.trim();
+          const empresa = document.getElementById('cf-empresa').value.trim();
+          const necesitas = document.getElementById('cf-necesitas').value.trim();
+          const presupuesto = document.getElementById('cf-presupuesto').value;
+          const email = document.getElementById('cf-email').value.trim();
+
+          await fetch(SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+              nombre,
+              empresa,
+              necesidades: necesitas,
+              presupuesto,
+              email,
+              archivo: 'Sin archivo'
+            })
+          });
+
+          // Mostrar mensaje de éxito
+          if (successMsg) {
+            successMsg.style.display = 'block';
           }
-        });
-        if (wrap.parentElement) wrap.parentElement.removeChild(wrap);
-      });
-    }
 
-    // ── Form submit
-    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXZK922_4Cu-Xz7CqODMqzka8_U0Co8frSUPOd6JzlYaX8lGoo5tIcmnhm7GoIV7IsVw/exec';
+          // Resetear formulario
+          document.getElementById('cf-nombre').value = '';
+          document.getElementById('cf-empresa').value = '';
+          document.getElementById('cf-necesitas').value = '';
+          document.getElementById('cf-email').value = '';
+          document.getElementById('cf-privacy-check').checked = false;
+          document.getElementById('cf-presupuesto').value = '';
+          document.getElementById('cfSelectValue').textContent = '-selecciona un rango-';
+          
+          if (selectBtn) selectBtn.classList.remove('selected');
+          
+          document.querySelectorAll('.cf-select-option').forEach(opt => opt.classList.remove('active'));
+          
+          ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('cf-valid', 'cf-error');
+          });
 
-    var submitBtn  = document.getElementById('cfSubmit');
-    var submitWrap = document.getElementById('cfSubmitWrap');
-    var successMsg = document.getElementById('cfSubmitSuccess');
-
-    // Tooltip on disabled button
-    var tooltipTimer;
-    if (submitWrap) {
-      submitWrap.addEventListener('mouseenter', function() {
-        if (submitBtn && submitBtn.disabled && !submitBtn.classList.contains('is-sending')) submitWrap.classList.add('tooltip-visible');
-      });
-      submitWrap.addEventListener('mouseleave', function() {
-        submitWrap.classList.remove('tooltip-visible');
-        clearTimeout(tooltipTimer);
-      });
-      submitWrap.addEventListener('click', function() {
-        if (submitBtn && submitBtn.disabled && !submitBtn.classList.contains('is-sending')) {
-          submitWrap.classList.add('tooltip-visible');
-          clearTimeout(tooltipTimer);
-          tooltipTimer = setTimeout(function() { submitWrap.classList.remove('tooltip-visible'); }, 3000);
+        } catch (error) {
+          console.error('Error al enviar formulario:', error);
+          alert('Error al enviar el formulario. Intenta de nuevo.');
+        } finally {
+          if (cfForm) cfForm.classList.remove('cf-form-sending');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Enviar formulario';
+          checkFormValidity();
         }
       });
     }
 
-    function resetForm() {
-      document.getElementById('cfForm').classList.remove('cf-form-sending');
-      submitBtn.classList.remove('is-sending');
-      submitBtn.textContent = 'Enviar formulario';
-      removeSkeletonOverlays();
-      ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el) { el.value = ''; el.classList.remove('cf-valid', 'cf-error'); }
-        dirtyFields[id] = false;
-      });
-      document.getElementById('cf-privacy-check').checked = false;
-      hiddenPres.value = '';
-      selectVal.textContent = '-selecciona un rango-';
-      selectBtn.classList.remove('selected');
-      dropdown.querySelectorAll('.cf-select-option').forEach(function(o) { o.classList.remove('active'); });
-      clearFile();
-      checkFormValidity();
-    }
-
-    submitBtn && submitBtn.addEventListener('click', function() {
-      if (submitBtn.classList.contains('is-sending')) return;
-      if (!checkFormValidity()) {
-        submitWrap.classList.add('tooltip-visible');
-        clearTimeout(tooltipTimer);
-        tooltipTimer = setTimeout(function() { submitWrap.classList.remove('tooltip-visible'); }, 3000);
-        return;
-      }
-      submitBtn.textContent = 'Enviando...';
-      submitBtn.disabled = true;
-      submitBtn.classList.add('is-sending');
-      document.getElementById('cfForm').classList.add('cf-form-sending');
-      addSkeletonOverlays();
-
-      var payload = {
-        nombre:      document.getElementById('cf-nombre').value.trim(),
-        empresa:     document.getElementById('cf-empresa').value.trim(),
-        necesitas:   document.getElementById('cf-necesitas').value.trim(),
-        presupuesto: hiddenPres.value,
-        email:       document.getElementById('cf-email').value.trim()
-      };
-
-      function fileToBase64(file) {
-        return new Promise(function(resolve, reject) {
-          var reader = new FileReader();
-          reader.onload  = function() { resolve(reader.result.split(',')[1]); };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      }
-
-      var sendPromise;
-      if (selectedFile) {
-        sendPromise = fileToBase64(selectedFile).then(function(b64) {
-          payload.archivo       = b64;
-          payload.archivoNombre = selectedFile.name;
-          payload.archivoTipo   = selectedFile.type;
-          return fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-        });
-      } else {
-        sendPromise = fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-      }
-
-      sendPromise
-        .then(function() {
-          resetForm();
-          submitBtn.disabled = false;
-          if (successMsg) successMsg.style.display = 'block';
-        })
-        .catch(function() {
-          submitBtn.textContent = 'Enviar formulario';
-          submitBtn.classList.remove('is-sending');
-          document.getElementById('cfForm').classList.remove('cf-form-sending');
-          removeSkeletonOverlays();
-          checkFormValidity();
-        });
-    });
+    // Inicializar estado del botón
+    checkFormValidity();
   })();
   </script>
+
 </body>
 </html>

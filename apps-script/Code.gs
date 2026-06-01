@@ -45,6 +45,19 @@ function doPost(e) {
       fileUrl
     ]);
 
+    // Export the spreadsheet as an Excel file and save it into the target folder
+    try {
+      var ssFile = DriveApp.getFileById(ss.getId());
+      var xlsxBlob = ssFile.getBlob().getAs(MimeType.MICROSOFT_EXCEL);
+      var ts = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
+      var xlsxName = SHEET_NAME + ' — ' + ts + '.xlsx';
+      var parentFolder = DriveApp.getFolderById(FOLDER_ID);
+      parentFolder.createFile(xlsxBlob.setName(xlsxName));
+    } catch (exportErr) {
+      // If export fails, log the error but continue — we still want to record the lead
+      Logger.log('Error exporting XLSX: ' + exportErr);
+    }
+
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
