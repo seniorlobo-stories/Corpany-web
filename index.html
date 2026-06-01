@@ -3060,6 +3060,7 @@
               </div>
             </div>
             <p class="cf-dropzone-hint">Formatos permitidos: PDF, Word, PNG, JPG · 1 archivo · máx. 5 MB</p>
+            <p class="cf-field-error" id="cf-error-archivo"></p>
           </div>
 
           <div class="cf-privacy">
@@ -3786,10 +3787,87 @@
   <script>
   // ── Form Submit to Google Sheets
   (function() {
-     const SHEET_URL = "https://script.google.com/macros/s/AKfycbw28c8d418SJtMSr5n2jrFGarZE9H8w-bfMm3bXBb6nHlzWNd65XwZ-Rx9pTDBMS3NpTA/exec";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbw28c8d418SJtMSr5n2jrFGarZE9H8w-bfMm3bXBb6nHlzWNd65XwZ-Rx9pTDBMS3NpTA/exec";
     const submitBtn = document.getElementById('cfSubmit');
     const successMsg = document.getElementById('cfSubmitSuccess');
     const cfForm = document.getElementById('cfForm');
+
+    // ── Dropzone
+    let selectedFile = null;
+    const dropzone      = document.getElementById('cfDropzone');
+    const fileInput     = document.getElementById('cf-archivo');
+    const dropzoneIdle  = document.getElementById('cfDropzoneIdle');
+    const dropzoneSel   = document.getElementById('cfDropzoneSelected');
+    const dropzoneName  = document.getElementById('cfDropzoneFilename');
+    const dropzoneRem   = document.getElementById('cfDropzoneRemove');
+    const dropzoneErr   = document.getElementById('cf-error-archivo');
+    const MAX_SIZE      = 5 * 1024 * 1024;
+    const ALLOWED_EXT   = ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg'];
+
+    function setDropzoneError(msg) {
+      if (dropzoneErr) dropzoneErr.textContent = msg || '';
+      if (dropzone) dropzone.classList.toggle('cf-error', !!msg);
+    }
+
+    function handleFileSelect(file) {
+      const ext = '.' + file.name.split('.').pop().toLowerCase();
+      if (!ALLOWED_EXT.includes(ext)) {
+        setDropzoneError('Formato no permitido. Usa PDF, Word, PNG o JPG.');
+        selectedFile = null;
+        return;
+      }
+      if (file.size > MAX_SIZE) {
+        setDropzoneError('El archivo supera el límite de 5 MB.');
+        selectedFile = null;
+        return;
+      }
+      selectedFile = file;
+      setDropzoneError('');
+      if (dropzoneName) dropzoneName.textContent = file.name;
+      if (dropzoneIdle) dropzoneIdle.style.display = 'none';
+      if (dropzoneSel)  dropzoneSel.classList.add('visible');
+      // Disable the native input so clicks land on the remove button, not re-open the dialog
+      if (fileInput) fileInput.style.pointerEvents = 'none';
+    }
+
+    function clearFile() {
+      selectedFile = null;
+      if (fileInput) {
+        fileInput.value = '';
+        fileInput.style.pointerEvents = ''; // restore so dropzone is clickable again
+      }
+      setDropzoneError('');
+      if (dropzoneIdle) dropzoneIdle.style.display = '';
+      if (dropzoneSel)  dropzoneSel.classList.remove('visible');
+    }
+
+    // The file input already covers the entire dropzone (position:absolute; inset:0),
+    // so the native click is enough — no JS re-trigger needed.
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        if (fileInput.files[0]) handleFileSelect(fileInput.files[0]);
+      });
+    }
+    if (dropzone) {
+      dropzone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropzone.classList.add('drag-over');
+      });
+      dropzone.addEventListener('dragleave', function() {
+        dropzone.classList.remove('drag-over');
+      });
+      dropzone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+        if (e.dataTransfer.files[0]) handleFileSelect(e.dataTransfer.files[0]);
+      });
+    }
+    if (dropzoneRem) {
+      dropzoneRem.addEventListener('click', function(e) {
+        e.stopPropagation();
+        clearFile();
+      });
+    }
 
     // ── Custom Select Dropdown
     const selectBtn = document.getElementById('cfSelectBtn');
@@ -3942,23 +4020,35 @@
         if (cfForm) cfForm.classList.add('cf-form-sending');
 
         try {
-          const nombre = document.getElementById('cf-nombre').value.trim();
-          const empresa = document.getElementById('cf-empresa').value.trim();
-          const necesitas = document.getElementById('cf-necesitas').value.trim();
+          const nombre     = document.getElementById('cf-nombre').value.trim();
+          const empresa    = document.getElementById('cf-empresa').value.trim();
+          const necesitas  = document.getElementById('cf-necesitas').value.trim();
           const presupuesto = document.getElementById('cf-presupuesto').value;
-          const email = document.getElementById('cf-email').value.trim();
+          const email      = document.getElementById('cf-email').value.trim();
+
+          let archivoBase64 = null, archivoNombre = '', archivoTipo = '';
+          if (selectedFile) {
+            archivoBase64 = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload  = () => resolve(reader.result.split(',')[1]);
+              reader.onerror = reject;
+              reader.readAsDataURL(selectedFile);
+            });
+            archivoNombre = selectedFile.name;
+            archivoTipo   = selectedFile.type;
+          }
+
+          const payload = { nombre, empresa, necesitas, presupuesto, email };
+          if (archivoBase64) {
+            payload.archivo      = archivoBase64;
+            payload.archivoNombre = archivoNombre;
+            payload.archivoTipo  = archivoTipo;
+          }
 
           await fetch(SHEET_URL, {
             method: 'POST',
             mode: 'no-cors',
-            body: JSON.stringify({
-              nombre,
-              empresa,
-              necesidades: necesitas,
-              presupuesto,
-              email,
-              archivo: 'Sin archivo'
-            })
+            body: JSON.stringify(payload)
           });
 
           // Mostrar mensaje de éxito
@@ -3976,7 +4066,8 @@
           document.getElementById('cfSelectValue').textContent = '-selecciona un rango-';
           
           if (selectBtn) selectBtn.classList.remove('selected');
-          
+          clearFile();
+
           document.querySelectorAll('.cf-select-option').forEach(opt => opt.classList.remove('active'));
           
           ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(id => {

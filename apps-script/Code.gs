@@ -14,9 +14,14 @@ function doPost(e) {
     var ss    = getOrCreateSpreadsheet();
     var sheet = ss.getActiveSheet();
 
+    // Si el sheet está vacío crea la cabecera completa.
+    // Si ya existe pero le falta la columna G (Archivo adjunto), la añade.
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Fecha', 'Nombre', 'Empresa', 'Email', 'Presupuesto', 'Qué necesita', 'Archivo adjunto']);
+      sheet.appendRow(['Fecha', 'Nombre', 'Empresa', 'Qué necesita', 'Presupuesto', 'Email', 'Archivo adjunto']);
       sheet.getRange(1, 1, 1, 7).setFontWeight('bold');
+    } else if (!sheet.getRange(1, 7).getValue()) {
+      sheet.getRange(1, 7).setValue('Archivo adjunto');
+      sheet.getRange(1, 7).setFontWeight('bold');
     }
 
     var fileUrl = '';
@@ -31,32 +36,20 @@ function doPost(e) {
         var blob         = Utilities.newBlob(bytes, data.archivoTipo || 'application/octet-stream', data.archivoNombre);
         fileUrl          = subFolder.createFile(blob).getUrl();
       } catch (fileErr) {
-        fileUrl = 'Error al subir archivo: ' + fileErr.message;
+        fileUrl = 'Error: ' + fileErr.message;
       }
     }
 
+    // Orden de columnas: Fecha | Nombre | Empresa | Qué necesita | Presupuesto | Email | Archivo adjunto
     sheet.appendRow([
       new Date(),
       data.nombre      || '',
       data.empresa     || '',
-      data.email       || '',
-      data.presupuesto || '',
       data.necesitas   || '',
+      data.presupuesto || '',
+      data.email       || '',
       fileUrl
     ]);
-
-    // Export the spreadsheet as an Excel file and save it into the target folder
-    try {
-      var ssFile = DriveApp.getFileById(ss.getId());
-      var xlsxBlob = ssFile.getBlob().getAs(MimeType.MICROSOFT_EXCEL);
-      var ts = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
-      var xlsxName = SHEET_NAME + ' — ' + ts + '.xlsx';
-      var parentFolder = DriveApp.getFolderById(FOLDER_ID);
-      parentFolder.createFile(xlsxBlob.setName(xlsxName));
-    } catch (exportErr) {
-      // If export fails, log the error but continue — we still want to record the lead
-      Logger.log('Error exporting XLSX: ' + exportErr);
-    }
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
@@ -75,4 +68,10 @@ function getOrCreateSpreadsheet() {
     return SpreadsheetApp.openById(files.next().getId());
   }
   return SpreadsheetApp.create(SHEET_NAME);
+}
+
+// Ejecuta esta función UNA VEZ desde el editor para autorizar el acceso a Drive
+function authorizeDrive() {
+  var folder = DriveApp.getFolderById(FOLDER_ID);
+  Logger.log('Autorizado. Carpeta: ' + folder.getName());
 }
