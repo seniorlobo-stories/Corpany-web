@@ -1325,6 +1325,31 @@
       });
     }
 
+    // ── Preselect servicio from query param
+    (function() {
+      const param = new URLSearchParams(window.location.search).get('servicio');
+      if (!param) return;
+      const map = {
+        'asesoria-comunicacion': 'Asesoría de comunicación',
+        'grabacion-video':       'Edición de vídeo',
+        'grabacion-dron':        'Grabación con Dron',
+      };
+      const value = map[param];
+      if (!value) return;
+      const dropdown   = document.getElementById('cfSelectServicioDropdown');
+      const hidden     = document.getElementById('cf-servicio');
+      const valueSpan  = document.getElementById('cfSelectServicioValue');
+      const btn        = document.getElementById('cfSelectServicioBtn');
+      if (!dropdown) return;
+      const option = Array.from(dropdown.querySelectorAll('.cf-select-option'))
+        .find(o => o.dataset.value === value);
+      if (!option) return;
+      option.classList.add('active');
+      if (hidden)    hidden.value          = value;
+      if (valueSpan) valueSpan.textContent = value;
+      if (btn)       btn.classList.add('selected');
+    })();
+
     // ── Form Validation
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
