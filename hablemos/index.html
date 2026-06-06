@@ -732,7 +732,7 @@
   </section>
 
   <!-- FORMULARIO -->
-  <section class="hablemos-form-section">
+  <section class="hablemos-form-section" id="cuentame">
 
     <div class="hablemos-form-left">
         <div class="hablemos-form-left-content">
@@ -1077,6 +1077,11 @@
       if (hidden)    hidden.value          = selected.join(', ');
       if (valueSpan) valueSpan.textContent = selected.join(', ');
       if (btn)       btn.classList.add('selected');
+      // Scroll to form so the user lands on "Cuéntame tu idea" instead of the hero
+      const formSection = document.getElementById('cuentame');
+      if (formSection) {
+        requestAnimationFrame(() => formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      }
     })();
 
     // ── Form Validation
