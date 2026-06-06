@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corpany — Asesoría Audiovisual</title>
+  <link rel="stylesheet" href="/nav.css" />
+  <link rel="stylesheet" href="/footer.css" />
   <style>
     @font-face {
       font-family: 'Space Grotesk';
@@ -39,169 +41,6 @@
       background: var(--white);
       color: var(--black);
       overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px 0 8px;
-      height: 56px;
-      width: calc(100% - 48px);
-      max-width: 1200px;
-      background: var(--white);
-      border: 2px solid var(--black);
-      border-radius: 14px;
-      box-shadow: 4px 4px 0 var(--black);
-      gap: 24px;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-
-    .nav-logo-gif {
-      height: 85px;
-      width: auto;
-      display: block;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      list-style: none;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--black);
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      transition: background 0.2s;
-    }
-
-    .nav-links a:hover { background: var(--carne); }
-
-    .nav-links li:last-child { position: absolute; right: 16px; }
-
-    .nav-links .nav-cta {
-      background: var(--turquesa);
-      color: var(--black);
-      border: 2px solid var(--black);
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-weight: 700;
-      box-shadow: 3px 3px 0 var(--black);
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
-      opacity: 1;
-    }
-
-    .nav-links .nav-cta:hover {
-      background: var(--turquesa);
-      box-shadow: 1px 1px 0 var(--black);
-      transform: translate(2px, 2px);
-    }
-
-    .nav-hamburger { display: none; }
-
-    /* ── DROPDOWN ── */
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .nav-dropdown-trigger {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--black);
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: var(--font-body);
-      transition: background 0.2s;
-    }
-
-    .nav-dropdown-trigger:hover { background: var(--carne); }
-
-    .nav-dropdown-trigger::after {
-      content: '↓';
-      font-size: 11px;
-      transition: transform 0.2s;
-    }
-
-    .nav-dropdown:hover .nav-dropdown-trigger::after {
-      transform: rotate(180deg);
-    }
-
-    .nav-dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      min-width: 180px;
-      background: var(--white);
-      border: 2px solid var(--black);
-      border-radius: 12px;
-      box-shadow: 4px 4px 0 var(--black);
-      overflow: hidden;
-      z-index: 200;
-    }
-
-    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
-
-    .nav-dropdown-menu a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--black);
-      text-decoration: none;
-      border-radius: 0;
-      transition: background 0.15s;
-    }
-
-    .nav-dropdown-menu a:hover { background: var(--carne); }
-
-    .nav-dropdown-menu a.dropdown-active { background: var(--turquesa); font-weight: 700; }
-
-    .nav-dropdown-menu a.dropdown-destructive { color: var(--inferno); }
-
-    .nav-dropdown-menu a.dropdown-destructive:hover { background: var(--carne); }
-
-    .nav-dropdown-menu .dropdown-separator {
-      height: 1px;
-      background: var(--light-gray);
-      margin: 4px 0;
-    }
-
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── HERO ── */
@@ -1425,78 +1264,6 @@
       line-height: 1.65;
     }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--azulmarino);
-      padding: 40px 60px 24px;
-      border-top: none;
-    }
-
-    .footer-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 32px;
-      border-bottom: 1px solid #2a2a28;
-      margin-bottom: 20px;
-    }
-
-    .footer-social {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .footer-social a {
-      text-decoration: none;
-    }
-
-    .footer-social a:hover { opacity: 1; }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .footer-links a {
-      font-size: 12px;
-      color: var(--gray);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--white); }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-logo {
-      height: 82px;
-      width: auto;
-      display: block;
-      filter: invert(1);
-    }
-
-    .footer-copy {
-      font-size: 11px;
-      color: var(--gray);
-      letter-spacing: 0.06em;
-    }
-
-    .footer-credit {
-      font-size: 11px;
-      color: var(--gray);
-    }
-
-    .footer-credit strong {
-      color: var(--gray);
-    }
-
     /* ── LIGHTBOX ── */
     .lightbox-overlay {
       display: none;
@@ -1657,8 +1424,6 @@
       #letsdance { padding: 36px 40px; }
       .letsdance-box { padding: 48px 40px; }
 
-      footer { padding: 40px 40px 24px; }
-
       /* ── fluid type tablet ── */
       .hero-title          { font-size: clamp(44px, 6.5vw, 76px); }
       .section-title-mix   { font-size: clamp(34px, 5.5vw, 56px); }
@@ -1672,73 +1437,6 @@
 
     /* MÓVIL (<768px) */
     @media (max-width: 768px) {
-      /* Nav móvil */
-      nav {
-        top: 10px;
-        width: calc(100% - 24px);
-        padding: 0 12px 0 8px;
-        height: 52px;
-      }
-
-      .nav-links { display: none; }
-
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 74px;
-        left: 12px;
-        right: 12px;
-        background: var(--white);
-        border: 2px solid var(--black);
-        border-radius: 14px;
-        box-shadow: 4px 4px 0 var(--black);
-        padding: 16px;
-        gap: 4px;
-        z-index: 99;
-        animation: fade-in 0.3s ease-out;
-      }
-
-      .nav-links.open li { width: 100%; }
-      .nav-links.open li:last-child { position: static; }
-
-      .nav-links.open a {
-        font-size: 14px;
-        opacity: 1;
-        display: block;
-        padding: 10px 14px;
-        border-radius: 8px;
-      }
-
-      .nav-links.open a:hover { background: var(--carne); }
-
-      .nav-links.open .nav-cta {
-        text-align: center;
-        margin-top: 4px;
-      }
-
-      .nav-hamburger {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        padding: 4px;
-        background: none;
-        border: none;
-      }
-
-      .nav-hamburger span {
-        display: block;
-        width: 22px;
-        height: 2px;
-        background: var(--black);
-        transition: transform 0.2s, opacity 0.2s;
-      }
-
-      .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-      .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-      .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
       /* Hero */
       #hero { padding-top: 80px; display: flex; flex-direction: column; align-items: stretch; }
       #hero .diferente-visual { padding: 0; order: -1; height: auto; }
@@ -1795,11 +1493,6 @@
       .letsdance-box { padding: 40px 24px; }
       .letsdance-title { font-size: clamp(36px, 10vw, 56px); }
 
-      /* Footer */
-      footer { padding: 32px 20px 20px; }
-      .footer-top { flex-direction: column; gap: 20px; align-items: flex-start; }
-      .footer-links { flex-wrap: wrap; gap: 12px; }
-      .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
     }
 
     /* ── AsciiFlowTrail ── */
@@ -2705,20 +2398,7 @@
 <body>
 
   <!-- NAV -->
-  <nav>
-    <a href="#" class="nav-logo">
-      <img src="Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="nav-logo-gif" />
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/servicios">Servicios</a></li>
-      <li><a href="#donde">Sobre mí</a></li>
-      <li><a href="/hablemos" class="nav-cta">Hablemos</a></li>
-    </ul>
-  </nav>
+  <div id="nav-placeholder"></div>
 
   <!-- HERO -->
   <section id="hero" data-screen-label="01 Hero">
@@ -2900,7 +2580,10 @@
         </button>
         <div class="accordion-body">
           <p>Antes de lanzar campañas o diseñar una sola pieza, me siento a entender tu marca: <strong>quién eres, qué transmites y sobre todo, qué deberías estar transmitiendo.</strong> Lo básico en otras palabras aunque por algún motivo suele ser lo primero que solemos saltarnos y nunca abordamos.</p>
-          <a href="/servicios#asesoria-comunicacion" class="btn-ejemplos">Ver ejemplos</a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
+            <a href="/servicios#asesoria-comunicacion" class="btn-outline" style="margin-top:0;padding:9px 18px;">Ver ejemplos</a>
+            <a href="/hablemos?servicio=asesoria-comunicacion" class="btn-primary" style="font-size:12px;padding:9px 18px;">Quiero este servicio</a>
+          </div>
         </div>
       </div>
 
@@ -2912,7 +2595,10 @@
         </button>
         <div class="accordion-body">
           <p>Creo y produzco contenido para que tu marca no solo esté presente sino que tenga sentido visual. Webs, vídeos y campañas pensadas para comunicar mejor, vender y que lo que se cree no sea solo algo que quede bonito.</p>
-          <a href="/servicios#grabacion-video" class="btn-ejemplos">Ver ejemplos</a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
+            <a href="/servicios#grabacion-video" class="btn-outline" style="margin-top:0;padding:9px 18px;">Ver ejemplos</a>
+            <a href="/hablemos?servicio=diseno-web-video" class="btn-primary" style="font-size:12px;padding:9px 18px;">Quiero este servicio</a>
+          </div>
         </div>
       </div>
 
@@ -2923,7 +2609,10 @@
         </button>
         <div class="accordion-body">
           <p>Porque hay perspectivas que desde el suelo simplemente no existen. Vídeos aéreo ideales para inmobiliarias, turismo, deportes, eventos o cualquier proyecto que necesite subir la cámara unos metros más.</p>
-          <a href="/servicios#grabacion-dron" class="btn-ejemplos">Ver ejemplos</a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
+            <a href="/servicios#grabacion-dron" class="btn-outline" style="margin-top:0;padding:9px 18px;">Ver ejemplos</a>
+            <a href="/hablemos?servicio=grabacion-dron" class="btn-primary" style="font-size:12px;padding:9px 18px;">Quiero este servicio</a>
+          </div>
         </div>
       </div>
 
@@ -3033,12 +2722,6 @@
           </div>
 
           <div class="cf-field">
-            <label class="cf-label" for="cf-necesitas">Cuéntame qué necesitas</label>
-            <textarea class="cf-textarea" id="cf-necesitas" name="necesitas" placeholder="Si te lo contara no me creerías, así que empecemos por el principio..." maxlength="600"></textarea>
-            <p class="cf-field-error" id="cf-error-necesitas"></p>
-          </div>
-
-          <div class="cf-field">
             <label class="cf-label">Presupuesto estimado</label>
             <div class="cf-select-wrap">
               <button type="button" class="cf-select-btn" id="cfSelectBtn" aria-haspopup="listbox" aria-expanded="false">
@@ -3065,6 +2748,12 @@
               <input class="cf-input cf-input-with-icon" type="email" id="cf-email" name="email" placeholder="johngalt@atlantis.com" autocomplete="email">
             </div>
             <p class="cf-field-error" id="cf-error-email"></p>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label" for="cf-necesitas">Cuéntame qué necesitas <span style="font-weight:400;color:var(--gray)">(opcional)</span></label>
+            <textarea class="cf-textarea" id="cf-necesitas" name="necesitas" placeholder="Si te lo contara no me creerías, así que empecemos por el principio..." maxlength="600"></textarea>
+            <p class="cf-field-error" id="cf-error-necesitas"></p>
           </div>
 
           <div class="cf-field">
@@ -3113,34 +2802,7 @@
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div class="footer-social">
-        <a href="#">
-          <img src="Gift/logo_glitch_v3_transparencia.gif" alt="Corpany" class="footer-logo" />
-        </a>
-        <a href="https://www.linkedin.com/company/corpany" aria-label="LinkedIn" target="_blank" rel="noopener" class="social-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-2-2 2 2 0 00-2 2v6h-4v-6a6 6 0 016-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
-        </a>
-        <a href="https://www.instagram.com/companycorrupt/" aria-label="Instagram" target="_blank" rel="noopener" class="social-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-        </a>
-        <a href="#" aria-label="Email" class="social-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-      <div class="footer-links">
-        <a href="#" id="cookieSettingsLink">Ajustes cookies</a>
-        <a href="/privacidad">Privacidad</a>
-        <a href="/cookies">Cookies</a>
-        <a href="/aviso-legal">Aviso legal</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">Copyright © 2026 CORPANY</span>
-    </div>
-  </footer>
+  <div id="footer-placeholder"></div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── Force hero grid layout (override any injected styles)
@@ -3237,20 +2899,6 @@
 
     window.addEventListener('resize', () => { tIdx = 0; updateSlider(); });
     renderDots();
-
-    // ── Hamburger menu
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    hamburger?.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open');
-    });
-    navLinks?.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navLinks.classList.remove('open');
-      });
-    });
 
     // ── Scroll animations (IntersectionObserver)
     const fadeEls = document.querySelectorAll('.fade-in');
@@ -3622,13 +3270,6 @@
         modal.classList.add('hidden');
       });
 
-      var settingsLink = document.getElementById('cookieSettingsLink');
-      if (settingsLink) {
-        settingsLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          modal.classList.remove('hidden');
-        });
-      }
     });
   </script>
 
@@ -4000,10 +3641,6 @@
           return false;
         }
       } else if (fieldId === 'cf-necesitas') {
-        if (!value) {
-          setFieldError(fieldId, 'Este campo es obligatorio');
-          return false;
-        }
         if (value.length > 600) {
           setFieldError(fieldId, 'Máximo 600 caracteres');
           return false;
@@ -4035,7 +3672,7 @@
       const isValid = nombre && nombre.length <= 30 &&
                       empresa && empresa.length <= 30 &&
                       servicio &&
-                      necesitas && necesitas.length <= 600 &&
+                      necesitas.length <= 600 &&
                       presupuesto &&
                       isValidEmail(email) &&
                       privacy;
@@ -4048,7 +3685,7 @@
     }
 
     // ── Attach validation listeners
-    ['cf-nombre', 'cf-empresa', 'cf-necesitas', 'cf-email'].forEach(fieldId => {
+    ['cf-nombre', 'cf-empresa', 'cf-email'].forEach(fieldId => {
       const input = document.getElementById(fieldId);
       if (!input) return;
 
@@ -4153,6 +3790,8 @@
     checkFormValidity();
   })();
   </script>
+  <script src="/nav.js" defer></script>
+  <script src="/footer.js" defer></script>
 
 </body>
 </html>
