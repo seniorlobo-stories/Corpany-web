@@ -353,6 +353,8 @@
     .cf-select-option:hover { background: var(--carne); }
     .cf-select-option.active { background: var(--turquesa); font-weight: 600; }
 
+    .cf-select-option.active::after { content: ' ✓'; }
+
     /* Email with icon */
     .cf-input-icon-wrap { position: relative; }
 
@@ -995,6 +997,23 @@
           </div>
 
           <div class="cf-field">
+            <label class="cf-label">En qué puedo ayudarte</label>
+            <div class="cf-select-wrap">
+              <button type="button" class="cf-select-btn" id="cfSelectServicioBtn" aria-haspopup="listbox" aria-expanded="false">
+                <span id="cfSelectServicioValue">-selecciona una opción-</span>
+                <span class="cf-select-btn-arrow">›</span>
+              </button>
+              <div class="cf-select-dropdown" id="cfSelectServicioDropdown" role="listbox">
+                <div class="cf-select-option" data-value="Asesoría de comunicación">Asesoría de comunicación</div>
+                <div class="cf-select-option" data-value="Diseño web/gráfico">Diseño web/gráfico</div>
+                <div class="cf-select-option" data-value="Edición de vídeo">Edición de vídeo</div>
+                <div class="cf-select-option" data-value="Grabación con Dron">Grabación con Dron</div>
+              </div>
+              <input type="hidden" id="cf-servicio" name="servicio">
+            </div>
+          </div>
+
+          <div class="cf-field">
             <label class="cf-label" for="cf-necesitas">Cuéntame qué necesitas</label>
             <textarea class="cf-textarea" id="cf-necesitas" name="necesitas" placeholder="Si te lo contara no me creerías, así que empecemos por el principio..." maxlength="600"></textarea>
             <p class="cf-field-error" id="cf-error-necesitas"></p>
@@ -1270,6 +1289,42 @@
       });
     }
 
+    // ── Custom Select Dropdown — Servicio (multi-select)
+    const selectServicioBtn = document.getElementById('cfSelectServicioBtn');
+    const servicioDropdown = document.getElementById('cfSelectServicioDropdown');
+    const selectServicioValue = document.getElementById('cfSelectServicioValue');
+    const hiddenServicio = document.getElementById('cf-servicio');
+
+    if (selectServicioBtn && servicioDropdown) {
+      selectServicioBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = servicioDropdown.classList.contains('open');
+        servicioDropdown.classList.toggle('open', !isOpen);
+        selectServicioBtn.classList.toggle('open', !isOpen);
+        selectServicioBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      servicioDropdown.querySelectorAll('.cf-select-option').forEach(option => {
+        option.addEventListener('click', function() {
+          option.classList.toggle('active');
+          const selected = Array.from(servicioDropdown.querySelectorAll('.cf-select-option.active'))
+            .map(o => o.dataset.value);
+          hiddenServicio.value = selected.join(', ');
+          selectServicioValue.textContent = selected.length > 0 ? selected.join(', ') : '-selecciona una opción-';
+          selectServicioBtn.classList.toggle('selected', selected.length > 0);
+          checkFormValidity();
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!selectServicioBtn.contains(e.target) && !servicioDropdown.contains(e.target)) {
+          servicioDropdown.classList.remove('open');
+          selectServicioBtn.classList.remove('open');
+          selectServicioBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
     // ── Form Validation
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -1313,6 +1368,7 @@
     function checkFormValidity() {
       const nombre = document.getElementById('cf-nombre').value.trim();
       const empresa = document.getElementById('cf-empresa').value.trim();
+      const servicio = document.getElementById('cf-servicio').value;
       const necesitas = document.getElementById('cf-necesitas').value.trim();
       const presupuesto = document.getElementById('cf-presupuesto').value;
       const email = document.getElementById('cf-email').value.trim();
@@ -1320,6 +1376,7 @@
 
       const isValid = nombre && nombre.length <= 30 &&
                       empresa && empresa.length <= 30 &&
+                      servicio &&
                       necesitas && necesitas.length <= 600 &&
                       presupuesto &&
                       isValidEmail(email) &&
@@ -1378,6 +1435,7 @@
         try {
           const nombre      = document.getElementById('cf-nombre').value.trim();
           const empresa     = document.getElementById('cf-empresa').value.trim();
+          const servicio    = document.getElementById('cf-servicio').value;
           const necesitas   = document.getElementById('cf-necesitas').value.trim();
           const presupuesto = document.getElementById('cf-presupuesto').value;
           const email       = document.getElementById('cf-email').value.trim();
@@ -1394,7 +1452,7 @@
             archivoTipo   = selectedFile.type;
           }
 
-          const payload = { nombre, empresa, necesitas, presupuesto, email };
+          const payload = { nombre, empresa, servicio, necesitas, presupuesto, email };
           if (archivoBase64) {
             payload.archivo       = archivoBase64;
             payload.archivoNombre = archivoNombre;

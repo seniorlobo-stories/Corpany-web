@@ -469,8 +469,8 @@
       background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 60%, rgba(0,0,0,0.45) 100%);
     }
 
-    #dronLeft .insta-handle, #dronLeft .insta-caption,
-    #dronRight .insta-handle, #dronRight .insta-caption { color: var(--white); }
+    .video-placeholder--vertical .insta-handle,
+    .video-placeholder--vertical .insta-caption { color: var(--white); }
 
     .insta-card-header {
       display: flex;
@@ -733,39 +733,10 @@
     </div>
     <div class="two-col-video">
       <div class="video-dual">
-        <div class="video-placeholder video-placeholder--vertical" id="dronLeft" style="background-image:url('/instagram_thumb/dron_thumb_left_IMG_0940.jpg');background-size:cover;background-position:center;">
-          <div class="insta-card-inner">
-            <div class="insta-card-header">
-              <img src="/instagram_thumb/logo_corpany_instagram.png" alt="Corpany" class="insta-avatar" />
-              <span class="insta-handle">@companycorrupt</span>
-            </div>
-            <div class="insta-play-wrap">
-              <div class="insta-play-btn">
-                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
-                  <path d="M3 2l14 9-14 9V2z" fill="#1a1a1a"/>
-                </svg>
-              </div>
-            </div>
-            <span class="insta-caption">Turismo Maldivas</span>
-          </div>
-        </div>
-        <div class="video-placeholder video-placeholder--vertical" id="dronRight" style="background-image:url('/instagram_thumb/dron_thumb_right_IMG_0941.jpg');background-size:cover;background-position:center;">
-          <div class="insta-card-inner">
-            <div class="insta-card-header">
-              <img src="/instagram_thumb/logo_corpany_instagram.png" alt="Corpany" class="insta-avatar" />
-              <span class="insta-handle">@companycorrupt</span>
-            </div>
-            <div class="insta-play-wrap">
-              <div class="insta-play-btn" id="dronRightPlayBtn">
-                <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
-                  <path d="M3 2l14 9-14 9V2z" fill="#1a1a1a"/>
-                </svg>
-              </div>
-            </div>
-            <span class="insta-caption">El dragón de la Calderona</span>
-          </div>
-        </div>
+        <div class="video-placeholder video-placeholder--vertical" id="dronLeft"></div>
+        <div class="video-placeholder video-placeholder--vertical" id="dronRight"></div>
       </div>
+      <div class="video-nav" id="dronNav"></div>
     </div>
   </div>
 
@@ -970,13 +941,75 @@
       }
     });
 
-    document.querySelector('#dronLeft .insta-play-btn').addEventListener('click', () => {
-      window.open('https://www.instagram.com/reels/DXElRoZCFU0/', '_blank', 'noopener,noreferrer');
-    });
+    // ── Carrusel dron: ventana deslizante de 2 en 2
+    (function() {
+      const dronVideos = [
+        { thumb: '/instagram_thumb/dron_thumb_left_IMG_0940.jpg',  caption: 'Turismo Maldivas',        action: 'tab',      url: 'https://www.instagram.com/reels/DXElRoZCFU0/' },
+        { thumb: '/instagram_thumb/dron_thumb_right_IMG_0941.jpg', caption: 'El dragón de la Calderona', action: 'tab', url: 'https://www.instagram.com/reel/DWiweBVDZXi/' },
+        { thumb: '/instagram_thumb/dron_thumb_right_SOMA_0941.png', caption: 'Evento SOMA Vlc',         action: 'tab', url: 'https://www.instagram.com/p/DZMwGI1N83Q/' },
+      ];
 
-    document.querySelector('#dronRight .insta-play-btn').addEventListener('click', () => {
-      openVideoLightbox('https://www.instagram.com/reel/DWiweBVDZXi/embed/?autoplay=1');
-    });
+      let current = 0;
+      const maxPage = dronVideos.length - 2;
+
+      function cardHTML(video) {
+        return `<div class="insta-card-inner">
+          <div class="insta-card-header">
+            <img src="/instagram_thumb/logo_corpany_instagram.png" alt="Corpany" class="insta-avatar" />
+            <span class="insta-handle">@companycorrupt</span>
+          </div>
+          <div class="insta-play-wrap">
+            <div class="insta-play-btn">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
+                <path d="M3 2l14 9-14 9V2z" fill="#1a1a1a"/>
+              </svg>
+            </div>
+          </div>
+          <span class="insta-caption">${video.caption}</span>
+        </div>`;
+      }
+
+      function renderCard(el, video) {
+        el.style.backgroundImage = `url('${video.thumb}')`;
+        el.style.backgroundSize = 'cover';
+        el.style.backgroundPosition = 'center';
+        el.innerHTML = cardHTML(video);
+        el.querySelector('.insta-play-btn').addEventListener('click', () => {
+          if (video.action === 'tab') {
+            window.open(video.url, '_blank', 'noopener,noreferrer');
+          } else {
+            openVideoLightbox(video.url);
+          }
+        });
+      }
+
+      function renderNav() {
+        const nav = document.getElementById('dronNav');
+        if (dronVideos.length <= 2) { nav.innerHTML = ''; return; }
+        const total = maxPage + 1;
+        const dots = Array.from({ length: total }, (_, i) =>
+          `<button class="tnav-dot${i === current ? ' active' : ''}" data-i="${i}">${i + 1}</button>`
+        ).join('');
+        nav.innerHTML = `<button class="tnav-btn" id="dronPrev">&#8249;</button><div class="tnav-dots">${dots}</div><button class="tnav-btn" id="dronNext">&#8250;</button>`;
+        document.getElementById('dronPrev').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('dronNext').addEventListener('click', () => goTo(current + 1));
+        nav.querySelectorAll('.tnav-dot').forEach(btn => {
+          btn.addEventListener('click', () => goTo(+btn.dataset.i));
+        });
+      }
+
+      function goTo(index) {
+        const total = maxPage + 1;
+        current = ((index % total) + total) % total;
+        renderCard(document.getElementById('dronLeft'),  dronVideos[current]);
+        renderCard(document.getElementById('dronRight'), dronVideos[current + 1]);
+        renderNav();
+      }
+
+      renderCard(document.getElementById('dronLeft'),  dronVideos[0]);
+      renderCard(document.getElementById('dronRight'), dronVideos[1]);
+      renderNav();
+    })();
 
     // ── Hamburger menu
     const hamburger = document.getElementById('hamburger');

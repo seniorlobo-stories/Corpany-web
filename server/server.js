@@ -29,7 +29,7 @@ async function ensureWorkbook() {
     worksheet = workbook.getWorksheet(SHEET_TITLE) || workbook.worksheets[0];
   } else {
     worksheet = workbook.addWorksheet(SHEET_TITLE);
-    worksheet.addRow(['Fecha', 'Nombre', 'Empresa', 'Email', 'Presupuesto', 'Qué necesita', 'Archivo adjunto']);
+    worksheet.addRow(['Fecha', 'Nombre', 'Empresa', 'Servicio', 'Email', 'Presupuesto', 'Qué necesita', 'Archivo adjunto']);
     await workbook.xlsx.writeFile(EXCEL_PATH);
   }
   return { workbook, worksheet };
@@ -63,7 +63,7 @@ app.post('/submit', upload.single('archivo'), async (req, res) => {
     }
 
     const { workbook, worksheet } = await ensureWorkbook();
-    const row = [new Date().toISOString(), data.nombre || '', data.empresa || '', data.email || '', data.presupuesto || '', data.necesitas || '', savedFilePath || ''];
+    const row = [new Date().toISOString(), data.nombre || '', data.empresa || '', data.servicio || '', data.email || '', data.presupuesto || '', data.necesitas || '', savedFilePath || ''];
     worksheet.addRow(row);
     await workbook.xlsx.writeFile(EXCEL_PATH);
 
