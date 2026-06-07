@@ -845,200 +845,6 @@
       color: var(--white);
     }
 
-    /* ── SECCIÓN COMPLICADO ── */
-    #complicado {
-      padding: 48px 80px 48px;
-      background: var(--white);
-      border-top: 1px solid var(--light-gray);
-    }
-
-    .complicado-top {
-      display: flex;
-      align-items: stretch;
-      justify-content: space-between;
-      margin-bottom: 40px;
-    }
-
-    .complicado-intro {
-      max-width: 676px;
-    }
-
-    .complicado-title {
-      font-family: var(--font-display);
-      font-size: clamp(32px, 4vw, 56px);
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-
-    .complicado-body {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--gray);
-    }
-
-    .complicado-body p { margin-bottom: 12px; }
-
-    .complicado-right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    #eyes-container {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .eye-ball {
-      width: 80px;
-      height: 80px;
-      background: var(--white);
-      border-radius: 50%;
-      border: 3px solid var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .eye-pupil {
-      width: 32px;
-      height: 32px;
-      background: var(--turquesa);
-      border-radius: 50%;
-      position: absolute;
-      will-change: transform;
-      transition: transform 0.05s linear;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .eye-shine {
-      width: 10px;
-      height: 10px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 50%;
-      position: absolute;
-      top: 5px;
-      left: 5px;
-    }
-
-    .testimonial-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .testimonial-nav-center {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .tnav-btn {
-      width: 40px;
-      height: 40px;
-      background: var(--white);
-      border: 2px solid var(--black);
-      border-radius: 8px;
-      box-shadow: 3px 3px 0 var(--black);
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--black);
-      font-family: var(--font-body);
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
-    }
-
-    .tnav-btn:hover {
-      box-shadow: 1px 1px 0 var(--black);
-      transform: translate(2px, 2px);
-    }
-
-    .tnav-dot {
-      width: 32px;
-      height: 32px;
-      background: var(--white);
-      border: 2px solid var(--black);
-      border-radius: 6px;
-      box-shadow: 2px 2px 0 var(--black);
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--black);
-      font-family: var(--font-body);
-      transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s;
-    }
-
-    .tnav-dot:hover {
-      box-shadow: 1px 1px 0 var(--black);
-      transform: translate(1px, 1px);
-    }
-
-    .tnav-dot.active {
-      background: var(--turquesa);
-      box-shadow: 2px 2px 0 var(--black);
-    }
-
-    .tnav-ellipsis {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--gray);
-      font-family: var(--font-body);
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .testimonials-slider {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-    }
-
-    .testimonials-track {
-      display: flex;
-      gap: 12px;
-      transition: transform 0.4s ease;
-    }
-
-    .tcard {
-      flex: 0 0 calc(33.33% - 8px);
-      overflow: hidden;
-      height: 320px;
-      border: 2px solid var(--black);
-      border-radius: 12px;
-      box-shadow: 4px 4px 0 var(--black);
-    }
-
-    .tcard img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .tcard:hover img {
-      transform: scale(1.04);
-    }
-
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1264,51 +1070,6 @@
       line-height: 1.65;
     }
 
-    /* ── LIGHTBOX ── */
-    .lightbox-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: rgba(0,0,0,0.92);
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-    }
-
-    .lightbox-overlay.active {
-      display: flex;
-    }
-
-    .lightbox-img {
-      max-width: 92vw;
-      max-height: 92vh;
-      object-fit: contain;
-      display: block;
-      cursor: default;
-      box-shadow: 0 8px 64px rgba(0,0,0,0.6);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 28px;
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 36px;
-      font-weight: 300;
-      cursor: pointer;
-      line-height: 1;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-      font-family: var(--font-body);
-    }
-
-    .lightbox-close:hover { opacity: 1; }
-
-    .tcard { cursor: zoom-in; }
-
     /* ── BRUSH HIGHLIGHT ── */
     .brush-underline {
       position: relative;
@@ -1415,10 +1176,6 @@
       #donde { padding: 36px 40px; }
       .accordion { max-width: 100%; }
 
-      #complicado { padding: 36px 40px 36px; }
-      .testimonials-track { gap: 8px; }
-      .tcard { flex: 0 0 calc(50% - 4px); }
-
       #formula { grid-template-columns: 1fr 1fr; padding: 36px 40px; gap: 40px; }
 
       #letsdance { padding: 36px 40px; }
@@ -1430,7 +1187,6 @@
       .decisiones-title    { font-size: clamp(38px, 6vw, 62px); }
       .accordion-trigger   { font-size: 20px; }
       .donde-title         { font-size: clamp(32px, 5vw, 52px); }
-      .complicado-title    { font-size: clamp(36px, 6vw, 56px); }
       .formula-title       { font-size: clamp(30px, 5vw, 52px); }
       .letsdance-title     { font-size: clamp(44px, 7vw, 70px); }
     }
@@ -1476,14 +1232,6 @@
       .escucho-label { white-space: normal; }
       .tw-span { display: inline; }
       .tw-span--sub { display: block; }
-
-      /* Complicado */
-      #complicado { padding: 56px 20px 48px; }
-      .complicado-top { flex-direction: column; gap: 24px; }
-      .complicado-right { align-items: center; width: 100%; }
-      #eyes-container { justify-content: center; }
-      .testimonial-nav { align-self: flex-end; }
-      .tcard { flex: 0 0 calc(100% - 0px); }
 
       /* Fórmula */
       #formula { grid-template-columns: 1fr; padding: 56px 20px; gap: 32px; }
@@ -2619,48 +2367,6 @@
     </div>
   </section>
 
-  <!-- COMPLICADO -->
-  <section id="complicado" data-screen-label="06 Complicado">
-    <div class="complicado-top">
-      <div class="complicado-intro">
-        <h2 class="complicado-title fade-in">En episodios anteriores...</h2>
-        <div class="complicado-body fade-in fade-in-delay-1">
-          <p>Empecé en este mundo cuando las redes sociales no existían y nos comunicábamos a golpe de perdidas.</p>
-          <p>Mis casi 20 años de experiencia me han llevado a entender:</p>
-          <ul style="padding-left: 1.5rem;">
-            <li><strong>Escape Rooms</strong> que querían mostrar lo que hacían sin spoilers,</li>
-            <li><strong>Estudios de videojuegos</strong> que necesitan vender en masa sin ser triple A,</li>
-            <li><strong>Instructores deportivos</strong> que buscaban motivar antes de la primera clase</li>
-            <li><strong>Plataformas B2B</strong> que tenían que explicar lo complejo de forma simple.</li>
-          </ul>
-          <p>Diferentes sectores, mismo reto:<strong> que se les vea, se les entienda y se les compre.</strong></p>
-          <p>Por eso, cuando me siento contigo probablemente ya he visto tu problema, sus mutaciones y algun primo suyo en otro multiverso.</p>
-        </div>
-      </div>
-      <div class="complicado-right">
-        <div id="eyes-container">
-          <div class="eye-ball"><div class="eye-pupil"><div class="eye-shine"></div></div></div>
-          <div class="eye-ball"><div class="eye-pupil"><div class="eye-shine"></div></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-nav">
-      <button class="tnav-btn" id="tPrev">&#8249;</button>
-      <div class="testimonial-nav-center" id="tDots"></div>
-      <button class="tnav-btn" id="tNext">&#8250;</button>
-    </div>
-    <div class="testimonials-slider">
-      <div class="testimonials-track" id="testimonialsTrack">
-        <div class="tcard"><img src="fotos_carrusel/Ambar_Escape.jpg" alt="Ambar Escape" /></div>
-        <div class="tcard"><img src="fotos_carrusel/Armageroom.jpg" alt="Armageroom" /></div>
-        <div class="tcard"><img src="fotos_carrusel/Branding_Coco.jpg" alt="Branding Coco Room" /></div>
-        <div class="tcard"><img src="fotos_carrusel/Diseno_grafico_ok.jpg" alt="Diseño gráfico" /></div>
-        <div class="tcard"><img src="fotos_carrusel/FloridaReplay_masquerade.jpg" alt="Florida Replay" /></div>
-        <div class="tcard"><img src="fotos_carrusel/retropolis_bender.jpg" alt="Retropolis Bender" /></div>
-      </div>
-    </div>
-  </section>
-
   <!-- LET'S DANCE -->
   <section id="letsdance" data-screen-label="08 Lets Dance">
     <div class="letsdance-box card card-colored">
@@ -2796,12 +2502,6 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">×</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
-  </div>
-
   <div id="footer-placeholder"></div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -2823,82 +2523,6 @@
       setHeroLayout();
       window.addEventListener('resize', setHeroLayout);
     })();
-
-    // ── Testimonials slider
-    const track = document.getElementById('testimonialsTrack');
-    const cards = track ? track.querySelectorAll('.tcard') : [];
-    const dotsContainer = document.getElementById('tDots');
-    let tIdx = 0;
-    const visibleCards = () => window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-
-    function getPageRange(current, total) {
-      if (total <= 5) return Array.from({length: total}, (_, i) => i);
-      if (window.innerWidth <= 768) {
-        // Móvil: siempre 5 botones, el del medio es "..."
-        // La página actual aparece en posición 2 (izq) o 4 (der) según mitad
-        let a, b;
-        if (current < total / 2) {
-          a = Math.max(1, current);
-          b = total - 2;
-        } else {
-          a = 1;
-          b = Math.min(total - 2, current);
-        }
-        return [0, a, '...', b, total - 1];
-      }
-      // Desktop/tablet: ellipsis
-      const show = new Set([0, total - 1,
-        ...Array.from({length: 3}, (_, j) => current - 1 + j).filter(p => p > 0 && p < total - 1)
-      ]);
-      const sorted = [...show].sort((a, b) => a - b);
-      const result = [];
-      for (let i = 0; i < sorted.length; i++) {
-        if (i > 0 && sorted[i] - sorted[i - 1] > 1) result.push('...');
-        result.push(sorted[i]);
-      }
-      return result;
-    }
-
-    function renderDots() {
-      if (!dotsContainer) return;
-      dotsContainer.innerHTML = '';
-      const total = Math.ceil(cards.length / visibleCards());
-      const current = Math.floor(tIdx / visibleCards());
-      getPageRange(current, total).forEach(item => {
-        if (item === '...') {
-          const span = document.createElement('span');
-          span.className = 'tnav-ellipsis';
-          span.textContent = '…';
-          dotsContainer.appendChild(span);
-        } else {
-          const dot = document.createElement('button');
-          dot.className = 'tnav-dot' + (item === current ? ' active' : '');
-          dot.textContent = item + 1;
-          dot.addEventListener('click', () => { tIdx = item * visibleCards(); updateSlider(); });
-          dotsContainer.appendChild(dot);
-        }
-      });
-    }
-
-    function updateSlider() {
-      if (!track || cards.length === 0) return;
-      const cardW = cards[0].offsetWidth + 12;
-      track.style.transform = `translateX(-${tIdx * cardW}px)`;
-      renderDots();
-    }
-
-    document.getElementById('tPrev')?.addEventListener('click', () => {
-      tIdx = Math.max(0, tIdx - 1);
-      updateSlider();
-    });
-
-    document.getElementById('tNext')?.addEventListener('click', () => {
-      tIdx = Math.min(cards.length - visibleCards(), tIdx + 1);
-      updateSlider();
-    });
-
-    window.addEventListener('resize', () => { tIdx = 0; updateSlider(); });
-    renderDots();
 
     // ── Scroll animations (IntersectionObserver)
     const fadeEls = document.querySelectorAll('.fade-in');
@@ -3005,28 +2629,6 @@
 
     setInterval(animateGrid, 900);
     animateGrid();
-
-    // ── Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-
-    document.querySelectorAll('.tcard img').forEach(img => {
-      img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     // ── Accordion text reveal (all items)
     (function() {
@@ -3224,32 +2826,6 @@
         requestAnimationFrame(animate);
       }
       animate();
-    })();
-
-    // ── EyesFollowCursor
-    (function() {
-      var radius = 18;
-      var eyes = document.querySelectorAll('.eye-ball');
-      var pupils = document.querySelectorAll('.eye-pupil');
-
-      function movePupils(mouseX, mouseY) {
-        eyes.forEach(function(eye, i) {
-          var pupil = pupils[i];
-          if (!eye || !pupil) return;
-          var rect = eye.getBoundingClientRect();
-          var centerX = rect.left + rect.width / 2;
-          var centerY = rect.top + rect.height / 2;
-          var dx = mouseX - centerX;
-          var dy = mouseY - centerY;
-          var distance = Math.sqrt(dx * dx + dy * dy);
-          var clamped = Math.min(distance, radius);
-          var angle = Math.atan2(dy, dx);
-          pupil.style.transform = 'translate(' + (Math.cos(angle) * clamped) + 'px, ' + (Math.sin(angle) * clamped) + 'px)';
-        });
-      }
-
-      document.addEventListener('mousemove', function(e) { movePupils(e.clientX, e.clientY); });
-      document.addEventListener('touchmove', function(e) { movePupils(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
     })();
 
     // ── Cookie modal
