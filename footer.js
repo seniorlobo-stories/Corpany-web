@@ -13,3 +13,31 @@ fetch('/footer.html')
       settingsLink.style.display = 'none';
     }
   });
+
+// Highlight animado por scroll para todos los <strong>
+(function() {
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js')
+    .then(function() {
+      return loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js');
+    })
+    .then(function() {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('strong').forEach(function(el) {
+        ScrollTrigger.create({
+          trigger: el,
+          start: '-100px center',
+          onEnter: function() { el.classList.add('active'); }
+        });
+      });
+    });
+})();

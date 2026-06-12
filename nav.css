@@ -205,3 +205,16 @@ nav {
   .nav-hamburger.open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 }
+
+strong {
+  color: var(--black);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-image: linear-gradient(var(--turquesa), var(--turquesa));
+  transition: background-size 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+  background-position: 0 center;
+}
+
+strong.active {
+  background-size: 100% 100%;
+}
